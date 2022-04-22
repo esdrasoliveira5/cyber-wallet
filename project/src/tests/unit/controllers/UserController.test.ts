@@ -66,7 +66,7 @@ describe('1 - Test UserController', () => {
       expect((response.json as sinon.SinonStub).calledWith(payload)).to.be.equal(true);
     });
   });
-  describe('1.1 - method login', () => {
+  describe('1.2 - method login', () => {
     before(async () => {
       request.body = {
         email: 'roberto@email.com',
@@ -87,13 +87,10 @@ describe('1 - Test UserController', () => {
     });
   
     it('return the status 200 and the user with a token', async () => {
-      await user.create(request, response);
+      await user.login(request, response);
       
       expect((response.status as sinon.SinonStub).calledWith(200)).to.be.equal(true);
-      expect((response.json as sinon.SinonStub).calledWith(
-        { status: 200, 
-        response: { user: payload, token: 'bearer token'}
-      })).to.be.equal(true);
+      expect((response.json as sinon.SinonStub).calledWith({ user: payload, token: 'bearer token'})).to.be.equal(true);
     });
   });
 });

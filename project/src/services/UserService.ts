@@ -7,7 +7,7 @@ import UserModel from '../models/UserModel';
 import { UserInfo } from '../types/UserInfoType';
 import { User } from '../types/UserType';
 
-class CustomerService extends Service<User | UserInfo> {
+class UserService extends Service<User | UserInfo> {
   constructor(model = new UserModel()) {
     super(model);
   }
@@ -23,4 +23,4 @@ class CustomerService extends Service<User | UserInfo> {
   };
 }
 
-export default CustomerService;
+export default UserService;

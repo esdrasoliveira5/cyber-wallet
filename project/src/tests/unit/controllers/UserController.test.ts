@@ -95,7 +95,8 @@ describe('1 - Test UserController', () => {
   });
   describe('1.3 - method readOne', () => {
     before(async () => {
-      request.params = { id: '6260bca97c58e5a0b7847cfa'}
+      request.params = { id: '6260bca97c58e5a0b7847cfa'};
+      request.headers = { authorization: 'bearer token'}
       response.status = sinon.stub().returns(response)
       response.json = sinon.stub()
       

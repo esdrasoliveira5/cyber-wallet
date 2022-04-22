@@ -60,6 +60,25 @@ class UserService extends Service<User | UserInfo> {
 
     return { status: 200, response: { user, token: newToken } };
   };
+
+  readOne = async (token:string, id: string):
+  Promise<ResponseUser<User> | ResponseError> => {
+    const jwtToken = this.jwt.validate(token); 
+    if ('status' in jwtToken) return jwtToken;
+
+    const validation = this.validations.userId(id);
+    if (validation) return validation;
+
+    const user = await this.model.readOne({ _id: id }) as UserId;
+
+    if (!user) {
+      return {
+        status: this.status.NOT_FOUND, 
+        response: { error: this.errors.NOT_FOUND },
+      };
+    }
+    return { status: this.status.OK, response: user };
+  };
 }
 
 export default UserService;

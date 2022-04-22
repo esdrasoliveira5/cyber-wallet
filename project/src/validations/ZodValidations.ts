@@ -2,6 +2,7 @@ import { MessageErrors, StatusCodes } from '../enums';
 import { ResponseError } from '../interfaces/ResponsesInterface';
 import { Transaction, TransactionSchema } from '../types/TransactionType';
 import { UserBasicInfo, UserBasicInfoSchema } from '../types/UserBasicInfoType';
+import { UserIdSchema } from '../types/UserIdType';
 import { UserInfo, UserInfoSchema } from '../types/UserInfoType';
 import { User, UserSchema } from '../types/UserType';
 
@@ -56,11 +57,12 @@ class ZodValidations {
     }
   };
 
-  idValidations = (id: string): void | ResponseError => {
-    if (id.length < 24) {
+  userId = (id: string): void | ResponseError => {
+    const parsedId = UserIdSchema.safeParse({ _id: id });
+    if (!parsedId.success) {
       return {
         status: this.status.BAD_REQUEST,
-        response: { error: 'Id must have 24 hexadecimal characters' },
+        response: { error: parsedId.error },
       };
     }
   };

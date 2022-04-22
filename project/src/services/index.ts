@@ -26,6 +26,9 @@ abstract class Service<T> {
   abstract create(obj: T): Promise<ResponseUser<T> | ResponseError>;
 
   abstract login(obj: Login): Promise<ResponseLogin<T> | ResponseError>;
+
+  abstract readOne(token: string, id: string):
+  Promise<ResponseUser<T> | ResponseError>;
 }
 
 export default Service;

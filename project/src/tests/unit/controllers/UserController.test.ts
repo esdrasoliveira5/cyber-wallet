@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import * as sinon from 'sinon';
 import chai from 'chai';
+import UserController from '../../../controllers/UserController';
 
 const { expect } = chai;
 const user = new UserController();

@@ -14,6 +14,7 @@ class CustomRouter<T> {
   ) {
     this.router.post(route, controller.create);
     this.router.post(`${route}/login`, controller.login);
+    this.router.get(`${route}/:id`, controller.readOne);
   }
 }
 

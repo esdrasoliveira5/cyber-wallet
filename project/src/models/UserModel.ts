@@ -18,10 +18,10 @@ const userSchema = new Schema<UserDocument>(
   { versionKey: false },
 );
 
-class CustomerModel extends MongoModel<User> {
+class UserModel extends MongoModel<User> {
   constructor(model = createModel('user', userSchema)) {
     super(model);
   }
 }
 
-export default CustomerModel;
+export default UserModel;

@@ -169,5 +169,24 @@ describe('3 - Test UserServices', () => {
         expect(response).to.be.deep.equal({ status: 404, response: { error: 'Not Found'} });
       });
     });
+    describe('c) if password is wrong', () => {
+      before(() => {
+        sinon
+        .stub(user.model, 'readOne')
+        .resolves(payload);
+      });
+
+      after(()=>{
+        sinon.restore();
+      });
+
+      it('return an object with status 401 and an error message "Invalid Password"', async () => {
+        const response = await user.login({
+          email: 'roberto@email.com',
+          password: 'roberto_',
+        })
+        expect(response).to.be.deep.equal({ status: 401, response: { error: 'Invalid Password'} });
+      });
+    });
   });
 });

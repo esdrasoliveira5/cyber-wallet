@@ -66,4 +66,34 @@ describe('1 - Test UserController', () => {
       expect((response.json as sinon.SinonStub).calledWith(payload)).to.be.equal(true);
     });
   });
+  describe('1.1 - method login', () => {
+    before(async () => {
+      request.body = {
+        email: 'roberto@email.com',
+        password: 'roberto_password',
+      }
+      response.status = sinon.stub().returns(response)
+      response.json = sinon.stub()
+      
+      sinon
+        .stub(user.service, 'login')
+        .resolves({ status: 200, 
+          response: { user: payload, token: 'bearer token'},
+        });
+    });
+  
+    after(()=>{
+      sinon.restore();
+    });
+  
+    it('return the status 200 and the user with a token', async () => {
+      await user.create(request, response);
+      
+      expect((response.status as sinon.SinonStub).calledWith(200)).to.be.equal(true);
+      expect((response.json as sinon.SinonStub).calledWith(
+        { status: 200, 
+        response: { user: payload, token: 'bearer token'}
+      })).to.be.equal(true);
+    });
+  });
 });

@@ -26,8 +26,8 @@ const payload = {
 }
 
 
-describe('2 - Test UserModel', () => {
-  describe('2.1 - method create', () => {
+describe('3 - Test UserModel', () => {
+  describe('3.1 - method create', () => {
     before(async () => {
       sinon
         .stub(user.model, 'create')
@@ -57,6 +57,24 @@ describe('2 - Test UserModel', () => {
           country: 'pais'
         }
       })
+      expect(response).to.be.deep.equal(payload);
+    });
+  });
+  describe('3.2 - method readOne', () => {
+    before(async () => {
+      sinon
+        .stub(user.model, 'findOne')
+        .resolves(payload);
+    });
+  
+    after(()=>{
+      sinon.restore();
+    });
+  
+    it('returns a user in the db', async () => {
+      const response = await user.readOne({
+        email: 'roberto@email.com',
+      });
       expect(response).to.be.deep.equal(payload);
     });
   });

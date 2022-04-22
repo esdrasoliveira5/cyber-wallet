@@ -27,8 +27,8 @@ const payload = {
   }
 }
 
-describe('3 - Test UserServices', () => {
-  describe('3.1 - method create', () => {
+describe('2 - Test UserServices', () => {
+  describe('2.1 - method create', () => {
     describe('a) if success', () => {
       before(async () => {
         sinon

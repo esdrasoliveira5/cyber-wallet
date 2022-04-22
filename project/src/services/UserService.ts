@@ -17,8 +17,8 @@ class UserService extends Service<User | UserInfo> {
     const validation = this.validations.userInfo(obj);
     if (validation) return validation;
 
-    const user = this.model.readOne(obj);
-    if (user !== null) {
+    const user = await this.model.readOne(obj);
+    if (user) {
       return {
         status: this.status.CONFLICT, response: { error: this.errors.CONFLICT },
       };

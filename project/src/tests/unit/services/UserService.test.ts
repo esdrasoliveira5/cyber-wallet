@@ -34,6 +34,7 @@ describe('3 - Test UserServices', () => {
         sinon
         .stub(user.model, 'readOne')
         .resolves(null);
+        
         sinon
           .stub(user.model, 'create')
           .resolves(payload);

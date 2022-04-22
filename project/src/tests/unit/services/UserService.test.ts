@@ -189,4 +189,47 @@ describe('3 - Test UserServices', () => {
       });
     });
   });
+  describe('3.3 - method readOne', () => {
+    describe('a) if success', () => {
+      before(async () => {
+        sinon
+        .stub(user.model, 'readOne')
+        .resolves(payload);
+      });
+    
+      after(()=>{
+        sinon.restore();
+      })
+    
+      it('return a object with status 200 and the user in the db', async () => {
+        const response = await user.readOne('token', '6260bca97c58e5a0b7847cfa')
+
+        expect(response.status).to.be.equal(200);
+        expect(response.response).to.be.deep.equal(payload);
+      });
+    });
+    describe('b) if fail', () => {
+      before(() => {
+        sinon
+        .stub(user.model, 'readOne')
+        .resolves(null);
+      });
+
+      after(()=>{
+        sinon.restore();
+      });
+
+      it('return an object with status 400 and an error message "_id must have 24 hexadecimal characters"', async () => {
+        const response = await user.readOne('token', '1234');
+        
+        expect(response.status).to.be.equal(400);
+      });
+
+      it('return an object with status 404 and an error message "Not Found"', async () => {
+        const response = await user.readOne('token', '6260bca97c58e5a0b7847cfa');
+
+        expect(response).to.be.deep.equal({ status: 404, response: { error: 'Not Found'} });
+      });
+    });
+  });
 });

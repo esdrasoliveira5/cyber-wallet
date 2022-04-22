@@ -5,7 +5,7 @@ import { UserBasicInfo, UserBasicInfoSchema } from '../types/UserBasicInfoType';
 import { UserInfo, UserInfoSchema } from '../types/UserInfoType';
 import { User, UserSchema } from '../types/UserType';
 
-class Validations {
+class ZodValidations {
   public error = MessageErrors;
 
   public status = StatusCodes;
@@ -65,4 +65,4 @@ class Validations {
     }
   };
 }
-export default Validations;
+export default ZodValidations;

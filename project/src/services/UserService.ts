@@ -14,6 +14,9 @@ class UserService extends Service<User | UserInfo> {
 
   create = async (obj:UserInfo):
   Promise<ResponseUser<UserInfo> | ResponseError> => {
+    const validation = this.validations.userInfo(obj);
+    if (validation) return validation;
+
     const response = await this.model.create({
       ...obj,
       transactions: [],

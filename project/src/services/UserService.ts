@@ -1,9 +1,11 @@
 import Service from '.';
 import {
   ResponseError,
+  ResponseLogin,
   ResponseUser,
 } from '../interfaces/ResponsesInterface';
 import UserModel from '../models/UserModel';
+import { Login } from '../types';
 import { UserInfo } from '../types/UserInfoType';
 import { User } from '../types/UserType';
 
@@ -33,6 +35,21 @@ class UserService extends Service<User | UserInfo> {
       balance: 0,
     });
     return { status: this.status.CREATED, response };
+  };
+
+  login = async (obj: Login):
+  Promise<ResponseLogin<User> | ResponseError> => {
+    const validation = this.validations.login(obj);
+    if (validation) return validation;
+
+    const user = await this.model.readOne({ email: obj.email }) as User;
+    if (!user) {
+      return {
+        status: this.status.NOT_FOUND, 
+        response: { error: this.errors.NOT_FOUND },
+      };
+    }
+    return { status: 200, response: { user, token: '' } };
   };
 }
 

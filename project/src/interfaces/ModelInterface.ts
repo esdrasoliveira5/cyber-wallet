@@ -1,7 +1,7 @@
-import { Login } from '../types';
+import { Email } from '../types';
 
 export interface Model<T> {
   create(obj: T): Promise<T>,
 
-  readOne(obj: T | Login): Promise<T | null>
+  readOne(obj: T | Email): Promise<T | null>
 }

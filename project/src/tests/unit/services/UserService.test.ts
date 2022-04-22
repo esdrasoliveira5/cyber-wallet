@@ -3,6 +3,7 @@ import chai from 'chai';
 
 import UserService from '../../../services/UserService';
 import { UserInfo } from '../../../types/UserInfoType';
+import { Login } from '../../../types';
 
 const user = new UserService();
 const { expect } = chai;
@@ -153,7 +154,7 @@ describe('3 - Test UserServices', () => {
       it('return an object with status 400 and an error message "password is required"', async () => {
         const response = await user.login({
           email: 'roberto@email.com',
-        })
+        } as Login)
         
         expect(response.status).to.be.equal(400);
       });

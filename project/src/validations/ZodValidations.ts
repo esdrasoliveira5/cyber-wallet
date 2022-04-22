@@ -64,5 +64,22 @@ class ZodValidations {
       };
     }
   };
+
+  login = (obj: Partial<User>): void | ResponseError => {
+    const { email, password } = obj;
+
+    if (email === undefined || typeof (email) !== 'string') {
+      return {
+        status: this.status.BAD_REQUEST,
+        response: { error: 'invalid email' },
+      };
+    }
+    if (password === undefined || typeof (email) !== 'string') {
+      return {
+        status: this.status.BAD_REQUEST,
+        response: { error: 'invalid password' },
+      };
+    }
+  };
 }
 export default ZodValidations;

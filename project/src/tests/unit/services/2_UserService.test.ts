@@ -2,6 +2,7 @@ import * as sinon from 'sinon';
 import chai from 'chai';
 
 import UserService from '../../../services/UserService';
+import { UserInfo } from '../../../types/UserInfoType';
 
 const user = new UserService();
 const { expect } = chai;
@@ -30,9 +31,6 @@ describe('3 - Test UserServices', () => {
   describe('3.1 - method create', () => {
     describe('a) if success', () => {
       before(async () => {
-        sinon
-        .stub(user.model, 'readOne')
-        .resolves(null);
         sinon
           .stub(user.model, 'create')
           .resolves(payload);
@@ -65,9 +63,6 @@ describe('3 - Test UserServices', () => {
     describe('b) if fail', () => {
       before(() => {
         sinon
-        .stub(user.model, 'readOne')
-        .resolves(payload);
-        sinon
           .stub(user.model, 'create')
           .resolves(undefined);
       });
@@ -91,30 +86,30 @@ describe('3 - Test UserServices', () => {
             state: 'estado',
             country: 'pais'
           },
-        })
+        } as UserInfo)
         
         expect(response.status).to.be.equal(400);
       });
 
-      it('return an object with status 409 and an error message "Conflict"', async () => {
-        const response = await user.create({
-          name: 'Roberto',
-          lastName: 'Oliveira',
-          email: 'roberto@email.com',
-          contact: '+5511987654321',
-          password: 'roberto_password',
-          address: {
-            street: 'avenida',
-            number: '100A',
-            district: 'Bairro',
-            zipcode: '45687-899',
-            city: 'cidade',
-            state: 'estado',
-            country: 'pais'
-          },
-        })
-        expect(response).to.be.deep.equal({ status: 409, response: { error: 'Conflict'} });
-      });
+      // it('return an object with status 409 and an error message "Conflict"', async () => {
+      //   const response = await user.create({
+      //     name: 'Roberto',
+      //     lastName: 'Oliveira',
+      //     email: 'roberto@email.com',
+      //     contact: '+5511987654321',
+      //     password: 'roberto_password',
+      //     address: {
+      //       street: 'avenida',
+      //       number: '100A',
+      //       district: 'Bairro',
+      //       zipcode: '45687-899',
+      //       city: 'cidade',
+      //       state: 'estado',
+      //       country: 'pais'
+      //     },
+      //   })
+      //   expect(response).to.be.deep.equal({ status: 409, response: { error: 'Conflict'} });
+      // });
     });
   });
 });

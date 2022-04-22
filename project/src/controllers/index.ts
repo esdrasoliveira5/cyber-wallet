@@ -12,6 +12,9 @@ abstract class Controller<T> {
 
   abstract create(req: RequestWithBody<T>, res: Response):
   Promise<typeof res>;
+
+  abstract login(req: RequestWithBody<T>, res: Response):
+  Promise<typeof res>;
 }
 
 export default Controller;

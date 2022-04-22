@@ -8,6 +8,11 @@ export interface Error {
   error: ZodError | string;
 }
 
+export interface Token<T> {
+  user: T,
+  token: string,
+}
+
 export interface ResponseError extends Status {
   response: Error
 }
@@ -17,8 +22,5 @@ export interface ResponseUser<T> extends Status {
 }
 
 export interface ResponseLogin<T> extends Status {
-  response: {
-    user: T,
-    token: string,
-  };
+  response: Token<T>,
 }

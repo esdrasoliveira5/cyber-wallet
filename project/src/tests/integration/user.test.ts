@@ -143,7 +143,7 @@ describe('2 - Test endpoint POST /user/login', () => {
     after(()=>{
       sinon.restore();
     });
-    it('a) return status 201 and the user created', async () => {
+    it('a) return status 200 and the user with token', async () => {
       chaiHttpResponse = await chai
          .request(server.app)
          .post('/user/login')
@@ -152,8 +152,8 @@ describe('2 - Test endpoint POST /user/login', () => {
           "email": "roberto@email.com",
           "password": "roberto_password",
         });
-      expect(chaiHttpResponse).to.have.status(201);
-      expect(chaiHttpResponse.body).to.deep.equal({
+      expect(chaiHttpResponse).to.have.status(200);
+      expect(chaiHttpResponse.body).to.have.deep.keys({
         "user": {
           "_id": "6260bca97c58e5a0b7847cfa",
           "name": "Roberto",

@@ -203,3 +203,67 @@ describe('2 - Test endpoint POST /user/login', () => {
     });
   });
 });
+
+describe('3 - Test endpoint GET /user/:id', () => {
+  describe('3.1 - if success', () => {
+    let chaiHttpResponse: Response;
+
+    before(() => {
+      sinon
+      .stub(user.model, 'findOne')
+      .resolves(payload);
+    });
+    after(()=>{
+      sinon.restore();
+    });
+    it('a) return status 200 and the user', async () => {
+      chaiHttpResponse = await chai
+         .request(server.app)
+         .get('/user/6260bca97c58e5a0b7847cfa')
+         .set('X-API-Key', 'foobar')
+
+      expect(chaiHttpResponse).to.have.status(200);
+      expect(chaiHttpResponse.body).to.have.deep.keys({
+        "_id": "6260bca97c58e5a0b7847cfa",
+        "name": "Roberto",
+        "lastName": "Oliveira",
+        "email": "roberto@email.com",
+        "contact": "+5511987654321",
+        "password": "$2b$10$JOmGDGptDGC1.eLa3OMj0uAk4FxZT2SjLH0lbP3Uh9W7iDHGN3Lp6",
+        "balance": 0,
+        "transactions": [],
+        "address": {
+            "street": "avenida",
+            "number": "100A",
+            "district": "Bairro",
+            "zipcode": "45687-899",
+            "city": "cidade",
+            "state": "estado",
+            "country": "pais"
+          }
+      });
+    });
+  });
+  describe('2.2 - if fail', () => {
+    let chaiHttpResponse: Response;
+    before(() => {
+      sinon
+      .stub(user.model, 'findOne')
+      .rejects({ message: 'Internal Server Error'});
+      sinon
+    });
+    after(()=>{
+      sinon.restore();
+    });
+
+    it('a) return status 500 and the error message "Internal Server Error"', async () => {
+      chaiHttpResponse = await chai
+         .request(server.app)
+         .get('/user/6260bca97c58e5a0b7847cfa')
+         .set('X-API-Key', 'foobar')
+
+      expect(chaiHttpResponse).to.have.status(500);
+      expect(chaiHttpResponse.body).to.deep.equal({ "error": "Erro: Internal Server Error"});
+    });
+  });
+});

@@ -132,12 +132,14 @@ describe('3 - Test UserServices', () => {
         sinon.restore();
       })
     
-      it('return a object with status 200 and the user in the db', async () => {
+      it('return a object with status 200 and the user in the db with token', async () => {
         const response = await user.login({
           email: 'roberto@email.com',
           password: 'roberto_password',
         })
-        expect(response).to.be.deep.equal({ status: 201, response: payload });
+
+        expect(response.status).to.be.equal(200);
+        expect(response.response).to.have.deep.keys({user: payload, token: 'bearer token'});
       });
     });
     describe('b) if fail', () => {

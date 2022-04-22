@@ -191,6 +191,8 @@ describe('3 - Test UserServices', () => {
   });
   describe('3.3 - method readOne', () => {
     describe('a) if success', () => {
+      const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyNjJmOTZmYjk1ODQxYmJmODI2MGRjMCIsImVtYWlsIjoicm9iZXJ0b0BlbWFpbC5jb20iLCJpYXQiOjE2NTA2NTM2MzQsImV4cCI6MTY1MTI1ODQzNH0.Fl6dMrria95qYgRXe1Lsk63bmhZcUpQ6qJkkRh3LoqA'
+
       before(async () => {
         sinon
         .stub(user.model, 'readOne')
@@ -202,13 +204,14 @@ describe('3 - Test UserServices', () => {
       })
     
       it('return a object with status 200 and the user in the db', async () => {
-        const response = await user.readOne('token', '6260bca97c58e5a0b7847cfa')
+        const response = await user.readOne(token, '6260bca97c58e5a0b7847cfa')
 
         expect(response.status).to.be.equal(200);
         expect(response.response).to.be.deep.equal(payload);
       });
     });
     describe('b) if fail', () => {
+      const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyNjJmOTZmYjk1ODQxYmJmODI2MGRjMCIsImVtYWlsIjoicm9iZXJ0b0BlbWFpbC5jb20iLCJpYXQiOjE2NTA2NTM2MzQsImV4cCI6MTY1MTI1ODQzNH0.Fl6dMrria95qYgRXe1Lsk63bmhZcUpQ6qJkkRh3LoqA'
       before(() => {
         sinon
         .stub(user.model, 'readOne')
@@ -219,14 +222,21 @@ describe('3 - Test UserServices', () => {
         sinon.restore();
       });
 
+      it('return an object with status 401 and an error message "invalid Token"', async () => {
+        const response = await user.readOne('123', '1234');
+        
+        expect(response).to.be.deep.equal({ status: 401, response: { error: 'Invalid Token'} });
+      });
+
+
       it('return an object with status 400 and an error message "_id must have 24 hexadecimal characters"', async () => {
-        const response = await user.readOne('token', '1234');
+        const response = await user.readOne(token, '1234');
         
         expect(response.status).to.be.equal(400);
       });
 
       it('return an object with status 404 and an error message "Not Found"', async () => {
-        const response = await user.readOne('token', '6260bca97c58e5a0b7847cfa');
+        const response = await user.readOne(token, '6260bca97c58e5a0b7847cfa');
 
         expect(response).to.be.deep.equal({ status: 404, response: { error: 'Not Found'} });
       });

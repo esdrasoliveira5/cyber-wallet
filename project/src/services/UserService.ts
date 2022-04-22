@@ -17,8 +17,11 @@ class UserService extends Service<User | UserInfo> {
     const validation = this.validations.userInfo(obj);
     if (validation) return validation;
 
+    const hash = await this.bcrypt.hashIt(obj.password);
+
     const response = await this.model.create({
       ...obj,
+      password: hash,
       transactions: [],
       balance: 0,
     });

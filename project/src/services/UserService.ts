@@ -6,6 +6,7 @@ import {
 } from '../interfaces/ResponsesInterface';
 import UserModel from '../models/UserModel';
 import { Login } from '../types';
+import { UserId } from '../types/UserIdType';
 import { UserInfo } from '../types/UserInfoType';
 import { User } from '../types/UserType';
 
@@ -42,7 +43,7 @@ class UserService extends Service<User | UserInfo> {
     const validation = this.validations.login(obj);
     if (validation) return validation;
 
-    const user = await this.model.readOne({ email: obj.email }) as User;
+    const user = await this.model.readOne({ email: obj.email }) as UserId;
     if (!user) {
       return {
         status: this.status.NOT_FOUND, 
@@ -52,7 +53,10 @@ class UserService extends Service<User | UserInfo> {
     const password = await this.bcrypt.compareIt(obj.password, user.password);
     if (password) return password;
 
-    const newToken = this.jwt.generate({ id: user._id, email: user.email });
+    const newToken = this.jwt.generate({
+      id: user._id,
+      email: user.email,
+    });
 
     return { status: 200, response: { user, token: newToken } };
   };

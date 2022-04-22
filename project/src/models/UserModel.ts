@@ -2,7 +2,7 @@ import { Schema, model as createModel, Document } from 'mongoose';
 import { User } from '../types/UserType';
 import MongoModel from './MongoModel';
 
-interface UserDocument extends Omit<User, '_id'>, Document {}
+interface UserDocument extends User, Document {}
 
 const userSchema = new Schema<UserDocument>(
   {
@@ -18,7 +18,7 @@ const userSchema = new Schema<UserDocument>(
   { versionKey: false },
 );
 
-class UserModel extends MongoModel<Omit<User, '_id'>> {
+class UserModel extends MongoModel<User> {
   constructor(model = createModel('user', userSchema)) {
     super(model);
   }

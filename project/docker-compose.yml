@@ -1,0 +1,11 @@
+version: '3.9'
+services:
+  mongodb:
+    image: mongo
+    ports:
+      - 27017:27017
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080

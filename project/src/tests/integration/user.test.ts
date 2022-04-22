@@ -61,7 +61,7 @@ describe('1 - Test endpoint POST /user', () => {
               "zipcode": "45687-899",
               "city": "cidade",
               "state": "estado",
-              "country": 'pais'
+              "country": "pais"
           }
       });
       expect(chaiHttpResponse).to.have.status(201);
@@ -81,7 +81,7 @@ describe('1 - Test endpoint POST /user', () => {
             "zipcode": "45687-899",
             "city": "cidade",
             "state": "estado",
-            "country": 'pais'
+            "country": "pais"
         }
       });
     });
@@ -116,7 +116,7 @@ describe('1 - Test endpoint POST /user', () => {
               "zipcode": "45687-899",
               "city": "cidade",
               "state": "estado",
-              "country": 'pais'
+              "country": "pais"
           }
       });
       expect(chaiHttpResponse).to.have.status(500);

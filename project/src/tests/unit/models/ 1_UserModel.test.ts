@@ -11,7 +11,7 @@ const payload = {
   lastName: 'Oliveira',
   email: 'roberto@email.com',
   contact: '+5511987654321',
-  password: '123456789',
+  password: '$2b$10$JOmGDGptDGC1.eLa3OMj0uAk4FxZT2SjLH0lbP3Uh9W7iDHGN3Lp6',
   balance: 0,
   transactions: [],
   address: {
@@ -44,7 +44,7 @@ describe('2 - Test UserModel', () => {
         lastName: 'Oliveira',
         email: 'roberto@email.com',
         contact: '+5511987654321',
-        password: '123456789',
+        password: '$2b$10$JOmGDGptDGC1.eLa3OMj0uAk4FxZT2SjLH0lbP3Uh9W7iDHGN3Lp6',
         balance: 0,
         transactions: [],
         address: {

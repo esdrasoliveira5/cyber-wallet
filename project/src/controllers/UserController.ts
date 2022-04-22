@@ -1,9 +1,8 @@
-import { Response } from 'express';
+import { Request, Response } from 'express';
 import Controller from '.';
 import {
   RequestWithBody,
 } from '../interfaces/RequestsInterfaces';
-import { Error, Token } from '../interfaces/ResponsesInterface';
 import UserService from '../services/UserService';
 import { Login } from '../types';
 import { UserInfo } from '../types/UserInfoType';
@@ -24,24 +23,33 @@ class UserController extends Controller<User | UserInfo> {
 
   create = async (
     req: RequestWithBody<UserInfo>,
-    res: Response<User | Error>,
+    res: Response,
   ): Promise<typeof res> => {
     const { body } = req;
     
     const { status, response } = await this.service.create(body);
 
-    return res.status(status).json(response as User);
+    return res.status(status).json(response);
   };
 
   login = async (
     req: RequestWithBody<Login>,
-    res: Response<Token<User> | Error>,
+    res: Response,
   ): Promise<typeof res> => {
     const { body } = req;
     
     const { status, response } = await this.service.login(body);
 
-    return res.status(status).json(response as Token<User>);
+    return res.status(status).json(response);
+  };
+
+  readOne = async (req: Request, res: Response): Promise<typeof res> => {
+    const { id } = req.params;
+    const { authorization } = req.headers;
+    
+    const { status, response } = await this.service.readOne(authorization, id);
+
+    return res.status(status).json(response);
   };
 }
 

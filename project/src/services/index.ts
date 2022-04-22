@@ -27,7 +27,7 @@ abstract class Service<T> {
 
   abstract login(obj: Login): Promise<ResponseLogin<T> | ResponseError>;
 
-  abstract readOne(token: string, id: string):
+  abstract readOne(token: string | undefined, id: string):
   Promise<ResponseUser<T> | ResponseError>;
 }
 

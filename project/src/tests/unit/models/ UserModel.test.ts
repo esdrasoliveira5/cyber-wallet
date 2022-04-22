@@ -60,7 +60,7 @@ describe('2 - Test UserModel', () => {
       expect(response).to.be.deep.equal(payload);
     });
   });
-  describe('2.2 - method readOne', () => {
+  describe('2.2 - method readOne search by email', () => {
     before(async () => {
       sinon
         .stub(user.model, 'findOne')
@@ -74,6 +74,24 @@ describe('2 - Test UserModel', () => {
     it('returns a user in the db', async () => {
       const response = await user.readOne({
         email: 'roberto@email.com',
+      });
+      expect(response).to.be.deep.equal(payload);
+    });
+  });
+  describe('2.3 - method readOne search by _id', () => {
+    before(async () => {
+      sinon
+        .stub(user.model, 'findOne')
+        .resolves(payload);
+    });
+  
+    after(()=>{
+      sinon.restore();
+    });
+  
+    it('returns a user in the db', async () => {
+      const response = await user.readOne({
+        _id: '6260bca97c58e5a0b7847cfa',
       });
       expect(response).to.be.deep.equal(payload);
     });

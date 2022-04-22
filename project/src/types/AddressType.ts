@@ -25,7 +25,7 @@ const AddressSchema = z.object({
     required_error: 'state is required',
     invalid_type_error: 'state must be a string',
   }).min(2, { message: 'state must be 3 or more characters long' }),
-  contry: z.string({
+  country: z.string({
     required_error: 'contry is required',
     invalid_type_error: 'contry must be a string',
   }).min(2, { message: 'contry must be 3 or more characters long' }),

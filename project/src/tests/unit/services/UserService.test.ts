@@ -34,7 +34,7 @@ describe('3 - Test UserServices', () => {
         sinon
         .stub(user.model, 'readOne')
         .resolves(null);
-        
+
         sinon
           .stub(user.model, 'create')
           .resolves(payload);
@@ -44,7 +44,7 @@ describe('3 - Test UserServices', () => {
         sinon.restore();
       })
     
-      it('return a object with status 201 and the customer created in the db', async () => {
+      it('return a object with status 201 and the User created in the db', async () => {
         const response = await user.create({
           name: 'Roberto',
           lastName: 'Oliveira',
@@ -116,6 +116,54 @@ describe('3 - Test UserServices', () => {
           },
         })
         expect(response).to.be.deep.equal({ status: 409, response: { error: 'Conflict'} });
+      });
+    });
+  });
+  describe('3.2 - method login', () => {
+    describe('a) if success', () => {
+      before(async () => {
+        sinon
+        .stub(user.model, 'readOne')
+        .resolves(payload);
+      });
+    
+      after(()=>{
+        sinon.restore();
+      })
+    
+      it('return a object with status 200 and the user in the db', async () => {
+        const response = await user.login({
+          email: 'roberto@email.com',
+          password: 'roberto_password',
+        })
+        expect(response).to.be.deep.equal({ status: 201, response: payload });
+      });
+    });
+    describe('b) if fail', () => {
+      before(() => {
+        sinon
+        .stub(user.model, 'readOne')
+        .resolves(null);
+      });
+
+      after(()=>{
+        sinon.restore();
+      });
+
+      it('return an object with status 400 and an error message "password is required"', async () => {
+        const response = await user.login({
+          email: 'roberto@email.com',
+        })
+        
+        expect(response.status).to.be.equal(400);
+      });
+
+      it('return an object with status 404 and an error message "Not Found"', async () => {
+        const response = await user.login({
+          email: 'roberto@email.com',
+          password: 'roberto_password',
+        })
+        expect(response).to.be.deep.equal({ status: 404, response: { error: 'Not Found'} });
       });
     });
   });

@@ -24,11 +24,11 @@ class ZodValidations {
     const userError = this.userBasic(obj);
     if (userError) return userError;
 
-    const parsedCustomer = UserInfoSchema.safeParse(obj);
-    if (!parsedCustomer.success) {
+    const parsedUser = UserInfoSchema.safeParse(obj);
+    if (!parsedUser.success) {
       return {
         status: this.status.BAD_REQUEST,
-        response: { error: parsedCustomer.error },
+        response: { error: parsedUser.error },
       };
     }
   };

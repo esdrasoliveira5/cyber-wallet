@@ -49,6 +49,8 @@ class UserService extends Service<User | UserInfo> {
         response: { error: this.errors.NOT_FOUND },
       };
     }
+    const password = await this.bcrypt.compareIt(obj.password, user.password);
+    if (password) return password;
 
     const newToken = this.jwt.generate({ id: user._id, email: user.email });
 

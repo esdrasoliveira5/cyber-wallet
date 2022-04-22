@@ -37,9 +37,6 @@ describe('1 - Test endpoint POST /user', () => {
 
     before(() => {
       sinon
-      .stub(user.model, 'findOne')
-      .resolves(null);
-      sinon
       .stub(user.model, 'create')
       .resolves(payload);
     });
@@ -93,7 +90,7 @@ describe('1 - Test endpoint POST /user', () => {
     let chaiHttpResponse: Response;
     before(() => {
       sinon
-      .stub(user.model, 'findOne')
+      .stub(user.model, 'create')
       .rejects({ message: 'Internal Server Error'});
       sinon
     });

@@ -49,7 +49,10 @@ class UserService extends Service<User | UserInfo> {
         response: { error: this.errors.NOT_FOUND },
       };
     }
-    return { status: 200, response: { user, token: '' } };
+
+    const newToken = this.jwt.generate({ id: user._id, email: user.email });
+
+    return { status: 200, response: { user, token: newToken } };
   };
 }
 

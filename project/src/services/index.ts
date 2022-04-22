@@ -7,6 +7,7 @@ import {
 } from '../interfaces/ResponsesInterface';
 import { Login } from '../types';
 import Bcrypt from '../validations/Bcrypt';
+import JwToken from '../validations/JwtToken';
 import ZodValidations from '../validations/ZodValidations';
 
 abstract class Service<T> {
@@ -17,6 +18,8 @@ abstract class Service<T> {
   protected validations = new ZodValidations();
 
   protected bcrypt = new Bcrypt();
+
+  protected jwt = new JwToken();
 
   constructor(public model: Model<T>) {}
 

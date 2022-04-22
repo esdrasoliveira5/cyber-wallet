@@ -18,7 +18,7 @@ const payload = {
   email: 'roberto@email.com',
   contact: '+5511987654321',
   password: '123456789',
-  balance: '',
+  balance: 0,
   transactions: [],
   address: {
     street: 'avenida',
@@ -75,7 +75,7 @@ describe('1 - Test endpoint POST /user', () => {
         "email": "roberto@email.com",
         "contact": "11987654321",
         "password": "123456789",
-        "balance": '',
+        "balance": 0,
         "transactions": [],
         "address": {
             "street": "avenida",

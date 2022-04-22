@@ -13,6 +13,7 @@ class CustomRouter<T> {
     route: string = controller.route,
   ) {
     this.router.post(route, controller.create);
+    this.router.post(`${route}/login`, controller.login);
   }
 }
 

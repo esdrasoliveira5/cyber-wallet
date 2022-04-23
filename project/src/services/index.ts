@@ -6,6 +6,7 @@ import {
   ResponseUser,
 } from '../interfaces/ResponsesInterface';
 import { Login } from '../types';
+import { Transaction } from '../types/TransactionType';
 import { UserInfo } from '../types/UserInfoType';
 import Bcrypt from '../validations/Bcrypt';
 import JwToken from '../validations/JwtToken';
@@ -22,6 +23,17 @@ abstract class Service<T> {
 
   protected jwt = new JwToken();
 
+  protected response = {
+    UNAUTHORIZED: { 
+      status: this.status.UNAUTHORIZED,
+      response: { error: this.errors.UNAUTHORIZED },
+    },
+    NOT_FOUND: { 
+      status: this.status.NOT_FOUND,
+      response: { error: this.errors.NOT_FOUND },
+    },
+  };
+
   constructor(public model: Model<T>) {}
 
   abstract create(obj: T): Promise<ResponseUser<T> | ResponseError>;
@@ -35,6 +47,9 @@ abstract class Service<T> {
   Promise<ResponseUser<T[]> | ResponseError>;
 
   abstract update(token: string | undefined, id: string, obj: T | UserInfo):
+  Promise<ResponseUser<T> | ResponseError>;
+
+  abstract transaction(token: string | undefined, obj: T | Transaction):
   Promise<ResponseUser<T> | ResponseError>;
 }
 

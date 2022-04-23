@@ -6,6 +6,7 @@ import {
 } from '../interfaces/ResponsesInterface';
 import UserModel from '../models/UserModel';
 import { Login } from '../types';
+import { Transaction } from '../types/TransactionType';
 import { UserId } from '../types/UserIdType';
 import { UserInfo } from '../types/UserInfoType';
 import { User } from '../types/UserType';
@@ -123,6 +124,27 @@ class UserService extends Service<User | UserInfo> {
     }
 
     return { status: this.status.OK, response: user as UserId };
+  };
+
+  Transaction = async (token: string | undefined, obj: Transaction): 
+  Promise<ResponseError | ResponseUser<User>> => {
+    const validation = this.validations.transaction(obj);
+    if (validation) return validation;
+
+    const jwtToken = this.jwt.validate(token);
+    if ('status' in jwtToken) return jwtToken;
+
+    const userToken = await this.model.readOne({ _id: jwtToken.id }) as UserId;
+    if (!userToken) return this.response.UNAUTHORIZED;
+
+    const reciver = await this.model.readOne(
+      { email: obj.receiver.email },
+    ) as UserId;
+    if (!reciver) return this.response.NOT_FOUND;
+
+    await this.model.sendTransaction(userToken._id, obj);
+    const response = await this.model.reciveTransaction(reciver._id, obj);
+    return { status: this.status.OK, response };
   };
 }
 

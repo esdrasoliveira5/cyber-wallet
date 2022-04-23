@@ -205,12 +205,16 @@ describe('2 - Test endpoint POST /user/login', () => {
 });
 
 describe('3 - Test endpoint GET /user/:id', () => {
+  const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyNjJmOTZmYjk1ODQxYmJmODI2MGRjMCIsImVtYWlsIjoicm9iZXJ0b0BlbWFpbC5jb20iLCJpYXQiOjE2NTA2NTM2MzQsImV4cCI6MTY1MTI1ODQzNH0.Fl6dMrria95qYgRXe1Lsk63bmhZcUpQ6qJkkRh3LoqA'
   describe('3.1 - if success', () => {
     let chaiHttpResponse: Response;
 
     before(() => {
       sinon
       .stub(user.model, 'findOne')
+      .onFirstCall()
+      .resolves(payload)
+      .onSecondCall()
       .resolves(payload);
     });
     after(()=>{
@@ -220,7 +224,7 @@ describe('3 - Test endpoint GET /user/:id', () => {
       chaiHttpResponse = await chai
          .request(server.app)
          .get('/user/6260bca97c58e5a0b7847cfa')
-         .set('X-API-Key', 'foobar')
+         .set('authorization', token)
 
       expect(chaiHttpResponse).to.have.status(200);
       expect(chaiHttpResponse.body).to.have.deep.keys({
@@ -250,17 +254,17 @@ describe('3 - Test endpoint GET /user/:id', () => {
       sinon
       .stub(user.model, 'findOne')
       .rejects({ message: 'Internal Server Error'});
-      sinon
     });
     after(()=>{
       sinon.restore();
     });
 
     it('a) return status 500 and the error message "Internal Server Error"', async () => {
+
       chaiHttpResponse = await chai
          .request(server.app)
          .get('/user/6260bca97c58e5a0b7847cfa')
-         .set('X-API-Key', 'foobar')
+         .set('authorization', token)
 
       expect(chaiHttpResponse).to.have.status(500);
       expect(chaiHttpResponse.body).to.deep.equal({ "error": "Erro: Internal Server Error"});

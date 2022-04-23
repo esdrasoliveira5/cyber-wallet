@@ -65,7 +65,6 @@ class UserService extends Service<User | UserInfo> {
   Promise<ResponseUser<User> | ResponseError> => {
     const jwtToken = this.jwt.validate(token); 
     if ('status' in jwtToken) return jwtToken;
-    
     const validation = this.validations.userId(id);
     if (validation) return validation;
 

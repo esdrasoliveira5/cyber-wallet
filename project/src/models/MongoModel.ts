@@ -1,4 +1,5 @@
 import { Model as M, Document } from 'mongoose';
+import { date } from 'zod';
 import { Model } from '../interfaces/ModelInterface';
 import { Email, ID } from '../types';
 import { Transaction } from '../types/TransactionType';
@@ -24,7 +25,7 @@ abstract class MongoModel<T> implements Model<T> {
       id, 
       { 
         $inc: { balance: obj.amount },
-        $push: { transactions: { $currentDate: { ...obj, date: true } } },
+        $push: { transactions: { ...obj, date: new Date() } },
       }, 
       { new: true },
     );
@@ -37,7 +38,7 @@ abstract class MongoModel<T> implements Model<T> {
       id, 
       { 
         $inc: { balance: -obj.amount },
-        $push: { transactions: { $currentDate: { ...obj, date: true } } },
+        $push: { transactions: { ...obj, date: new Date() } },
       }, 
       { new: true },
     );

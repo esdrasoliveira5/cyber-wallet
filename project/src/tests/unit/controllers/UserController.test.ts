@@ -181,3 +181,42 @@ describe('1 - Test UserController', () => {
     });
   });
 });
+describe('1.6 - method transaction', () => {
+  before(async () => {
+    request.headers = { authorization: 'bearer token'};
+    request.body = {
+      type: "deposit",
+      receiver: {
+        name: "Roberto",
+        lastName: "Oliveira",
+        email: "roberto@email.com",
+        contact: "+5511987654321",
+      },
+      transmitter: {
+        name: 'Maria',
+        lastName: 'Pereira',
+        email: 'maria@email.com',
+        contact: '+5511937659321',
+      },
+      amount: 50
+    };
+
+    response.status = sinon.stub().returns(response)
+    response.json = sinon.stub()
+    
+    sinon
+      .stub(user.service, 'transaction')
+      .resolves({ status: 200, response: payload });
+  });
+
+  after(()=>{
+    sinon.restore();
+  });
+
+  it('return the status 200 and the user updated', async () => {
+    await user.update(request, response);
+    
+    expect((response.status as sinon.SinonStub).calledWith(200)).to.be.equal(true);
+    expect((response.json as sinon.SinonStub).calledWith(payload)).to.be.equal(true);
+  });
+});

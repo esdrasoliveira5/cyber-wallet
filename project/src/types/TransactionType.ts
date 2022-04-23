@@ -11,6 +11,7 @@ const TransactionSchema = z.object({
     required_error: 'amount is required',
     invalid_type_error: 'amount must be a number',
   }).min(0, { message: 'amount must be greater than 0' }),
+  date: z.string().optional(),
 });
 
 export type Transaction = z.infer<typeof TransactionSchema>;

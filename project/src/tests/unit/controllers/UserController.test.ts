@@ -174,7 +174,7 @@ describe('1 - Test UserController', () => {
     });
   
     it('return the status 200 and the user updated', async () => {
-      await user.read(request, response);
+      await user.update(request, response);
       
       expect((response.status as sinon.SinonStub).calledWith(200)).to.be.equal(true);
       expect((response.json as sinon.SinonStub).calledWith(payload)).to.be.equal(true);

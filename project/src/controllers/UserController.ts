@@ -70,7 +70,7 @@ class UserController extends Controller<User | UserInfo> {
       status,
       response,
     } = await this.service.update(authorization, id, body);
-
+    
     return res.status(status).json(response);
   };
 }

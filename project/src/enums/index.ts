@@ -16,4 +16,5 @@ export enum MessageErrors {
   INVALID_TOKEN = 'Invalid Token',
   INVALID_PASSWORD = 'Invalid Password',
   CONFLICT = 'Conflict',
+  UNAUTHORIZED = 'Unauthorized',
 }

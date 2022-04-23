@@ -29,6 +29,9 @@ abstract class Service<T> {
 
   abstract readOne(token: string | undefined, id: string):
   Promise<ResponseUser<T> | ResponseError>;
+
+  abstract read(token: string | undefined):
+  Promise<ResponseUser<T[]> | ResponseError>;
 }
 
 export default Service;

@@ -71,7 +71,7 @@ class UserService extends Service<User | UserInfo> {
     const userToken = await this.model.readOne({ _id: jwtToken.id }) as UserId;
     if (!userToken) {
       return {
-        status: 404, response: { error: this.errors.NOT_FOUND },
+        status: 401, response: { error: this.errors.UNAUTHORIZED },
       };
     }
 
@@ -81,6 +81,22 @@ class UserService extends Service<User | UserInfo> {
         status: 404, response: { error: this.errors.NOT_FOUND },
       };
     }
+    return { status: this.status.OK, response: user };
+  };
+
+  read = async (token:string):
+  Promise<ResponseUser<User[]> | ResponseError> => {
+    const jwtToken = this.jwt.validate(token); 
+    if ('status' in jwtToken) return jwtToken;
+
+    const userToken = await this.model.readOne({ _id: jwtToken.id }) as UserId;
+    if (!userToken) {
+      return {
+        status: this.status.UNAUTHORIZED,
+        response: { error: this.errors.UNAUTHORIZED },
+      };
+    }
+    const user = await this.model.read() as UserId[];
     return { status: this.status.OK, response: user };
   };
 }

@@ -1,6 +1,7 @@
 import { Model as M, Document } from 'mongoose';
 import { Model } from '../interfaces/ModelInterface';
 import { Email, ID } from '../types';
+import { UserInfo } from '../types/UserInfoType';
 
 abstract class MongoModel<T> implements Model<T> {
   constructor(public model: M<T & Document>) {}
@@ -11,6 +12,9 @@ abstract class MongoModel<T> implements Model<T> {
   Promise<T | null> => this.model.findOne(obj);
 
   read = async (): Promise<T[]> => this.model.find();
+
+  update = async (id: string, obj: T | UserInfo): Promise<T | null> =>
+    this.model.findByIdAndUpdate(id, { ...obj }, { new: true });
 }
 
 export default MongoModel;

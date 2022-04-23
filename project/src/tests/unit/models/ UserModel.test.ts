@@ -124,7 +124,7 @@ describe('2 - Test UserModel', () => {
     })
   
     it('return the user updated in the db', async () => {
-      const response = await user.update({
+      const response = await user.update('6260bca97c58e5a0b7847cfa', {
         name: 'Roberto',
         lastName: 'Oliveira',
         email: 'roberto@email.com',

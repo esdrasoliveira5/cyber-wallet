@@ -490,18 +490,18 @@ describe('3 - Test UserServices', () => {
       });
     });
   });
-  describe('3.6 - method reciveTransaction', () => {
+  describe('3.6 - method transaction', () => {
     describe('a) if success', () => {
       before(async () => {
         sinon
         .stub(user.model, 'readOne')
-        .onFirstCall()
-        .resolves(payload)
-        .onSecondCall()
         .resolves(payloadTwo)
         sinon
-        .stub(user.model, 'reciveTransaction')
+        .stub(user.model, 'sendTransaction')
         .resolves(payload);
+        sinon
+        .stub(user.model, 'reciveTransaction')
+        .resolves(payloadTwo);
       });
     
       after(()=>{
@@ -509,7 +509,7 @@ describe('3 - Test UserServices', () => {
       })
     
       it('return a object with status 200 and the user updated in the db', async () => {
-        const response = await user.reciveTransaction(token, '6260bca97c58e5a0b7847cfa', {
+        const response = await user.transaction(token, {
           type: "deposit",
           receiver: {
             name: "Roberto",
@@ -527,173 +527,6 @@ describe('3 - Test UserServices', () => {
         })
         expect(response.status).to.be.equal(200);
         expect(response.response).to.be.deep.equal(payload);
-      });
-    });
-    // describe('b) if fail', () => {
-    //   before(() => {
-    //     sinon
-    //     .stub(user.model, 'readOne')
-    //     .resolves(null)
-    //   });
-
-    //   after(()=>{
-    //     sinon.restore();
-    //   });
-
-    //   it('return an object with status 400 and an error message "name is required"', async () => {
-    //     const response = await user.update(token, '6260bca97c58e5a0b7847cfa', {
-    //       lastName: 'Oliveira',
-    //       contact: '+5511987654321',
-    //       email: 'roberto@email.com',
-    //       password: 'roberto_password',
-    //       address: {
-    //         street: 'avenida',
-    //         number: '100A',
-    //         district: 'Bairro',
-    //         zipcode: '45687-899',
-    //         city: 'cidade',
-    //         state: 'estado',
-    //         country: 'pais'
-    //       },
-    //     }as UserInfo)
-        
-    //     expect(response.status).to.be.equal(400);
-    //   });
-
-    //   it('return an object with status 400 and an error message "_id must have 24 hexadecimal characters"', async () => {
-    //     const response = await user.update(token, '123', {
-    //       name: 'Roberto',
-    //       lastName: 'Oliveira',
-    //       email: 'roberto@email.com',
-    //       contact: '+5511987654321',
-    //       password: 'roberto_password',
-    //       address: {
-    //         street: 'avenida',
-    //         number: '100A',
-    //         district: 'Bairro',
-    //         zipcode: '45687-899',
-    //         city: 'cidade',
-    //         state: 'estado',
-    //         country: 'pais'
-    //       }
-    //     });
-        
-    //     expect(response.status).to.be.equal(400);
-    //   });
-
-    //   it('return an object with status 401 and an error message "invalid Token"', async () => {
-    //     const response = await user.update('123', '6260bca97c58e5a0b7847cfa', {
-    //       name: 'Roberto',
-    //       lastName: 'Oliveira',
-    //       email: 'roberto@email.com',
-    //       contact: '+5511987654321',
-    //       password: 'roberto_password',
-    //       address: {
-    //         street: 'avenida',
-    //         number: '100A',
-    //         district: 'Bairro',
-    //         zipcode: '45687-899',
-    //         city: 'cidade',
-    //         state: 'estado',
-    //         country: 'pais'
-    //       }
-    //     });
-        
-    //     expect(response).to.be.deep.equal({ status: 401, response: { error: 'Invalid Token'} });
-    //   });
-    //   it('return an object with status 401 and an error message "Unauthorized"', async () => {
-    //     const response = await user.update(token, '6260bca97c58e5a0b7847cfa', {
-    //       name: 'Roberto',
-    //       lastName: 'Oliveira',
-    //       email: 'roberto@email.com',
-    //       contact: '+5511987654321',
-    //       password: 'roberto_password',
-    //       address: {
-    //         street: 'avenida',
-    //         number: '100A',
-    //         district: 'Bairro',
-    //         zipcode: '45687-899',
-    //         city: 'cidade',
-    //         state: 'estado',
-    //         country: 'pais'
-    //       }
-    //     });
-        
-    //     expect(response).to.be.deep.equal({ status: 401, response: { error: 'Unauthorized'} });
-    //   });
-    // });
-    // describe('c) id not found', () => {
-    //   before(() => {
-    //     sinon
-    //     .stub(user.model, 'readOne')
-    //     .resolves(payload)
-    //     sinon
-    //     .stub(user.model, 'update')
-    //     .resolves(undefined);
-    //   });
-
-    //   after(()=>{
-    //     sinon.restore();
-    //   });
-
-    //   it('return an object with status 404 and an error message "Not Found"', async () => {
-    //     const response = await user.update(token, '6260bca97c58e5a0b7847cfa', {
-    //       name: 'Roberto',
-    //       lastName: 'Oliveira',
-    //       email: 'roberto@email.com',
-    //       contact: '+5511987654321',
-    //       password: 'roberto_password',
-    //       address: {
-    //         street: 'avenida',
-    //         number: '100A',
-    //         district: 'Bairro',
-    //         zipcode: '45687-899',
-    //         city: 'cidade',
-    //         state: 'estado',
-    //         country: 'pais'
-    //       }
-    //     });
-    //     expect(response).to.be.deep.equal({ status: 404, response: { error: 'Not Found'} });
-    //   });
-    // });
-  });
-  describe('3.7 - method sendTransaction', () => {
-    describe('a) if success', () => {
-      before(async () => {
-        sinon
-        .stub(user.model, 'readOne')
-        .onFirstCall()
-        .resolves(payloadTwo)
-        .onSecondCall()
-        .resolves(payload)
-        sinon
-        .stub(user.model, 'sendTransaction')
-        .resolves(payloadTwo);
-      });
-    
-      after(()=>{
-        sinon.restore();
-      })
-    
-      it('return a object with status 200 and the user updated in the db', async () => {
-        const response = await user.sendTransaction(token, '6260bca07e58e5a0b7847cfb', {
-          type: "deposit",
-          receiver: {
-            name: "Roberto",
-            lastName: "Oliveira",
-            email: "roberto@email.com",
-            contact: "+5511987654321",
-          },
-          transmitter: {
-            name: 'Maria',
-            lastName: 'Pereira',
-            email: 'maria@email.com',
-            contact: '+5511937659321',
-          },
-          amount: 50
-        })
-        expect(response.status).to.be.equal(200);
-        expect(response.response).to.be.deep.equal(payloadTwo);
       });
     });
     // describe('b) if fail', () => {

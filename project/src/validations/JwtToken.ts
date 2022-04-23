@@ -34,7 +34,6 @@ class JwToken {
     try {
       const decoded = verify(token, this.secret) as TokenType;
       return decoded;
-      
     } catch (err) {
       return {
         status: this.status.UNAUTHORIZED,

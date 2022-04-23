@@ -109,17 +109,17 @@ class UserService extends Service<User | UserInfo> {
     const jwtToken = this.jwt.validate(token);
     if ('status' in jwtToken) return jwtToken;
 
-    const userToken = await this.model.readOne({ _id: jwtToken.id }) as UserId;
-    if (!userToken) return this.response.UNAUTHORIZED;
-
     const reciver = await this.model.readOne(
       { email: obj.receiver.email },
     ) as UserId;
     if (!reciver) return this.response.NOT_FOUND;
 
-    await this.model.sendTransaction(userToken._id, obj);
-    const response = await this.model.reciveTransaction(reciver._id, obj);
-    return { status: this.status.OK, response };
+    const response = await this.model.sendTransaction(jwtToken.id, obj);
+    if (response === null) return this.response.NOT_FOUND;
+
+    await this.model.reciveTransaction(reciver._id, obj);
+
+    return { status: this.status.OK, response: response as UserId };
   };
 }
 

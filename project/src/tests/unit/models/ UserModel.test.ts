@@ -143,4 +143,35 @@ describe('2 - Test UserModel', () => {
       expect(response).to.be.deep.equal(payload);
     });
   });
+  describe('2.6 - method transaction', () => {
+    before(async () => {
+      sinon
+        .stub(user.model, 'findByIdAndUpdate')
+        .resolves(payload);
+    });
+  
+    after(()=>{
+      sinon.restore();
+    })
+  
+    it('return the user updated in the db', async () => {
+      const response = await user.transaction('6260bca97c58e5a0b7847cfa', {
+        type: "deposit",
+        receiver: {
+          name: "Roberto",
+          lastName: "Oliveira",
+          email: "roberto@email.com",
+          contact: "+5511987654321",
+        },
+        transmitter: {
+          name: "Roberto",
+          lastName: "Oliveira",
+          email: "roberto@email.com",
+          contact: "+5511987654321",
+        },
+        amount: 100
+      })
+      expect(response).to.be.deep.equal(payload);
+    });
+  });
 });

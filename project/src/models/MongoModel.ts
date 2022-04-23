@@ -1,6 +1,7 @@
 import { Model as M, Document } from 'mongoose';
 import { Model } from '../interfaces/ModelInterface';
 import { Email, ID } from '../types';
+import { Transaction } from '../types/TransactionType';
 import { UserInfo } from '../types/UserInfoType';
 
 abstract class MongoModel<T> implements Model<T> {
@@ -16,6 +17,14 @@ abstract class MongoModel<T> implements Model<T> {
   update = async (id: string, obj: T | Omit<UserInfo, 'email'>):
   Promise<T | null> =>
     this.model.findByIdAndUpdate(id, { ...obj }, { new: true });
+
+  transaction = async (id: string, obj: Transaction):
+  Promise<T | null> =>
+    this.model.findByIdAndUpdate(
+      id, 
+      { $push: { transactions: { $currentDate: { ...obj, date: true } } } }, 
+      { new: true },
+    );
 }
 
 export default MongoModel;

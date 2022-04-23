@@ -305,4 +305,68 @@ describe('3 - Test UserServices', () => {
       });
     });
   });
+  describe('3.5 - method update', () => {
+    describe('a) if success', () => {
+      before(async () => {
+        sinon
+        .stub(user.model, 'readOne')
+        .resolves(payload)
+        sinon
+        .stub(user.model, 'update')
+        .resolves(payload);
+      });
+    
+      after(()=>{
+        sinon.restore();
+      })
+    
+      it('return a object with status 200 and the user updated in the db', async () => {
+        const response = await user.update(token, '6260bca97c58e5a0b7847cfa')
+        expect(response.status).to.be.equal(200);
+        expect(response.response).to.be.deep.equal(payload);
+      });
+    });
+    describe('b) if fail', () => {
+      before(() => {
+        sinon
+        .stub(user.model, 'readOne')
+        .resolves(null)
+      });
+
+      after(()=>{
+        sinon.restore();
+      });
+
+      it('return an object with status 401 and an error message "invalid Token"', async () => {
+        const response = await user.update('123', '6260bca97c58e5a0b7847cfa');
+        
+        expect(response).to.be.deep.equal({ status: 401, response: { error: 'Invalid Token'} });
+      });
+      it('return an object with status 401 and an error message "Unauthorized"', async () => {
+        const response = await user.update(token, '6260bca97c58e5a0b7847cfa');
+        
+        expect(response).to.be.deep.equal({ status: 401, response: { error: 'Unauthorized'} });
+      });
+    });
+    describe('c) if fail', () => {
+      before(() => {
+        sinon
+        .stub(user.model, 'readOne')
+        .resolves(payload)
+        sinon
+        .stub(user.model, 'update')
+        .resolves(undefined);
+      });
+
+      after(()=>{
+        sinon.restore();
+      });
+
+      it('return an object with status 404 and an error message "Not Found"', async () => {
+        const response = await user.read(token);
+        
+        expect(response).to.be.deep.equal({ status: 404, response: { error: 'Not Found'} });
+      });
+    });
+  });
 });

@@ -372,6 +372,27 @@ describe('3 - Test UserServices', () => {
         expect(response.status).to.be.equal(400);
       });
 
+      it('return an object with status 400 and an error message "_id must have 24 hexadecimal characters"', async () => {
+        const response = await user.update(token, '123', {
+          name: 'Roberto',
+          lastName: 'Oliveira',
+          email: 'roberto@email.com',
+          contact: '+5511987654321',
+          password: 'roberto_password',
+          address: {
+            street: 'avenida',
+            number: '100A',
+            district: 'Bairro',
+            zipcode: '45687-899',
+            city: 'cidade',
+            state: 'estado',
+            country: 'pais'
+          }
+        });
+        
+        expect(response.status).to.be.equal(400);
+      });
+
       it('return an object with status 401 and an error message "invalid Token"', async () => {
         const response = await user.update('123', '6260bca97c58e5a0b7847cfa', {
           name: 'Roberto',
@@ -413,7 +434,7 @@ describe('3 - Test UserServices', () => {
         expect(response).to.be.deep.equal({ status: 401, response: { error: 'Unauthorized'} });
       });
     });
-    describe('c) if fail', () => {
+    describe('c) id not found', () => {
       before(() => {
         sinon
         .stub(user.model, 'readOne')

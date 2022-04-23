@@ -67,6 +67,19 @@ class ZodValidations {
     }
   };
 
+  userUpdate = (id: string, obj: UserInfo): void | ResponseError => {
+    const userError = this.userInfo(obj);
+    if (userError) return userError;
+    
+    const parsedId = UserIdSchema.safeParse({ _id: id });
+    if (!parsedId.success) {
+      return {
+        status: this.status.BAD_REQUEST,
+        response: { error: parsedId.error },
+      };
+    }
+  };
+
   login = (obj: Partial<User>): void | ResponseError => {
     const { email, password } = obj;
 

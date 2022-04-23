@@ -103,11 +103,11 @@ class UserService extends Service<User | UserInfo> {
 
   update = async (token: string, id: string, obj: UserInfo):
   Promise<ResponseUser<User> | ResponseError> => {
+    const validation = this.validations.userUpdate(id, obj);
+    if (validation) return validation;
+    
     const jwtToken = this.jwt.validate(token);
     if ('status' in jwtToken) return jwtToken;
-
-    const validation = this.validations.userId(id);
-    if (validation) return validation;
 
     const userToken = await this.model.readOne({ _id: jwtToken.id }) as UserId;
     if (!userToken) {
@@ -121,7 +121,7 @@ class UserService extends Service<User | UserInfo> {
     if (!user) {
       return { status: 404, response: { error: this.errors.NOT_FOUND } };
     }
-    
+
     return { status: this.status.OK, response: user as UserId };
   };
 }

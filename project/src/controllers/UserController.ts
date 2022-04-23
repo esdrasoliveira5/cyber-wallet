@@ -5,6 +5,7 @@ import {
 } from '../interfaces/RequestsInterfaces';
 import UserService from '../services/UserService';
 import { Login } from '../types';
+import { Transaction } from '../types/TransactionType';
 import { UserInfo } from '../types/UserInfoType';
 import { User } from '../types/UserType';
 
@@ -70,6 +71,19 @@ class UserController extends Controller<User | UserInfo> {
       status,
       response,
     } = await this.service.update(authorization, id, body);
+    
+    return res.status(status).json(response);
+  };
+
+  transaction = async (req: RequestWithBody<Transaction>, res: Response):
+  Promise<typeof res> => {
+    const { authorization } = req.headers;
+    const { body } = req;
+
+    const {
+      status,
+      response,
+    } = await this.service.transaction(authorization, body);
     
     return res.status(status).json(response);
   };

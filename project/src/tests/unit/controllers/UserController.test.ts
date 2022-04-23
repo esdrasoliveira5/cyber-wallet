@@ -214,7 +214,7 @@ describe('1.6 - method transaction', () => {
   });
 
   it('return the status 200 and the user updated', async () => {
-    await user.update(request, response);
+    await user.transaction(request, response);
     
     expect((response.status as sinon.SinonStub).calledWith(200)).to.be.equal(true);
     expect((response.json as sinon.SinonStub).calledWith(payload)).to.be.equal(true);

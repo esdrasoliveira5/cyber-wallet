@@ -22,11 +22,7 @@ class UserService extends Service<User | UserInfo> {
     if (validation) return validation;
 
     const user = await this.model.readOne({ email: obj.email });
-    if (user) {
-      return {
-        status: this.status.CONFLICT, response: { error: this.errors.CONFLICT },
-      };
-    }
+    if (user) return this.response.CONFLICT;
 
     const hash = await this.bcrypt.hashIt(obj.password);
 
@@ -45,12 +41,8 @@ class UserService extends Service<User | UserInfo> {
     if (validation) return validation;
 
     const user = await this.model.readOne({ email: obj.email }) as UserId;
-    if (!user) {
-      return {
-        status: this.status.NOT_FOUND, 
-        response: { error: this.errors.NOT_FOUND },
-      };
-    }
+    if (!user) return this.response.NOT_FOUND;
+    
     const password = await this.bcrypt.compareIt(obj.password, user.password);
     if (password) return password;
 
@@ -71,18 +63,11 @@ class UserService extends Service<User | UserInfo> {
     if (validation) return validation;
 
     const userToken = await this.model.readOne({ _id: jwtToken.id }) as UserId;
-    if (!userToken) {
-      return {
-        status: 401, response: { error: this.errors.UNAUTHORIZED },
-      };
-    }
+    if (!userToken) return this.response.UNAUTHORIZED;
 
     const user = await this.model.readOne({ _id: id });
-    if (!user) {
-      return {
-        status: 404, response: { error: this.errors.NOT_FOUND },
-      };
-    }
+    if (!user) return this.response.NOT_FOUND;
+
     return { status: this.status.OK, response: user as UserId };
   };
 
@@ -92,12 +77,8 @@ class UserService extends Service<User | UserInfo> {
     if ('status' in jwtToken) return jwtToken;
 
     const userToken = await this.model.readOne({ _id: jwtToken.id }) as UserId;
-    if (!userToken) {
-      return {
-        status: this.status.UNAUTHORIZED,
-        response: { error: this.errors.UNAUTHORIZED },
-      };
-    }
+    if (!userToken) return this.response.UNAUTHORIZED;
+
     const user = await this.model.read();
     return { status: this.status.OK, response: user as UserId[] };
   };
@@ -111,22 +92,16 @@ class UserService extends Service<User | UserInfo> {
     if ('status' in jwtToken) return jwtToken;
 
     const userToken = await this.model.readOne({ _id: jwtToken.id }) as UserId;
-    if (!userToken) {
-      return {
-        status: this.status.UNAUTHORIZED,
-        response: { error: this.errors.UNAUTHORIZED },
-      };
-    }
+    if (!userToken) return this.response.UNAUTHORIZED;
+
     const hash = await this.bcrypt.hashIt(obj.password);
     const user = await this.model.update(id, { ...obj, password: hash });
-    if (!user) {
-      return { status: 404, response: { error: this.errors.NOT_FOUND } };
-    }
+    if (!user) return this.response.NOT_FOUND;
 
     return { status: this.status.OK, response: user as UserId };
   };
 
-  Transaction = async (token: string | undefined, obj: Transaction): 
+  transaction = async (token: string | undefined, obj: Transaction): 
   Promise<ResponseError | ResponseUser<User>> => {
     const validation = this.validations.transaction(obj);
     if (validation) return validation;

@@ -32,6 +32,10 @@ abstract class Service<T> {
       status: this.status.NOT_FOUND,
       response: { error: this.errors.NOT_FOUND },
     },
+    CONFLICT: {
+      status: this.status.CONFLICT, 
+      response: { error: this.errors.CONFLICT },
+    },
   };
 
   constructor(public model: Model<T>) {}

@@ -65,6 +65,7 @@ class UserService extends Service<User | UserInfo> {
   Promise<ResponseUser<User> | ResponseError> => {
     const jwtToken = this.jwt.validate(token); 
     if ('status' in jwtToken) return jwtToken;
+
     const validation = this.validations.userId(id);
     if (validation) return validation;
 
@@ -75,16 +76,16 @@ class UserService extends Service<User | UserInfo> {
       };
     }
 
-    const user = await this.model.readOne({ _id: id }) as UserId;
+    const user = await this.model.readOne({ _id: id });
     if (!user) {
       return {
         status: 404, response: { error: this.errors.NOT_FOUND },
       };
     }
-    return { status: this.status.OK, response: user };
+    return { status: this.status.OK, response: user as UserId };
   };
 
-  read = async (token:string):
+  read = async (token: string):
   Promise<ResponseUser<User[]> | ResponseError> => {
     const jwtToken = this.jwt.validate(token); 
     if ('status' in jwtToken) return jwtToken;
@@ -96,8 +97,32 @@ class UserService extends Service<User | UserInfo> {
         response: { error: this.errors.UNAUTHORIZED },
       };
     }
-    const user = await this.model.read() as UserId[];
-    return { status: this.status.OK, response: user };
+    const user = await this.model.read();
+    return { status: this.status.OK, response: user as UserId[] };
+  };
+
+  update = async (token: string, id: string, obj: UserInfo):
+  Promise<ResponseUser<User> | ResponseError> => {
+    const jwtToken = this.jwt.validate(token);
+    if ('status' in jwtToken) return jwtToken;
+
+    const validation = this.validations.userId(id);
+    if (validation) return validation;
+
+    const userToken = await this.model.readOne({ _id: jwtToken.id }) as UserId;
+    if (!userToken) {
+      return {
+        status: this.status.UNAUTHORIZED,
+        response: { error: this.errors.UNAUTHORIZED },
+      };
+    }
+
+    const user = await this.model.update(id, obj);
+    if (!user) {
+      return { status: 404, response: { error: this.errors.NOT_FOUND } };
+    }
+    
+    return { status: this.status.OK, response: user as UserId };
   };
 }
 

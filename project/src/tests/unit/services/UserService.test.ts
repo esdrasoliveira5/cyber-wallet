@@ -356,6 +356,7 @@ describe('3 - Test UserServices', () => {
         const response = await user.update(token, '6260bca97c58e5a0b7847cfa', {
           lastName: 'Oliveira',
           contact: '+5511987654321',
+          email: 'roberto@email.com',
           password: 'roberto_password',
           address: {
             street: 'avenida',
@@ -366,7 +367,7 @@ describe('3 - Test UserServices', () => {
             state: 'estado',
             country: 'pais'
           },
-        } as Omit<UserInfo, 'email'>)
+        }as UserInfo)
         
         expect(response.status).to.be.equal(400);
       });
@@ -375,6 +376,7 @@ describe('3 - Test UserServices', () => {
         const response = await user.update('123', '6260bca97c58e5a0b7847cfa', {
           name: 'Roberto',
           lastName: 'Oliveira',
+          email: 'roberto@email.com',
           contact: '+5511987654321',
           password: 'roberto_password',
           address: {
@@ -394,6 +396,7 @@ describe('3 - Test UserServices', () => {
         const response = await user.update(token, '6260bca97c58e5a0b7847cfa', {
           name: 'Roberto',
           lastName: 'Oliveira',
+          email: 'roberto@email.com',
           contact: '+5511987654321',
           password: 'roberto_password',
           address: {
@@ -428,6 +431,7 @@ describe('3 - Test UserServices', () => {
         const response = await user.update(token, '6260bca97c58e5a0b7847cfa', {
           name: 'Roberto',
           lastName: 'Oliveira',
+          email: 'roberto@email.com',
           contact: '+5511987654321',
           password: 'roberto_password',
           address: {

@@ -16,7 +16,7 @@ class CustomRouter<T> {
     this.router.post(`${route}/login`, controller.login);
     this.router.get(`${route}/:id`, controller.readOne);
     this.router.get(route, controller.read);
-    this.router.put(`${route}/transaction`, controller.update);
+    this.router.put(`${route}/transaction`, controller.transaction);
     this.router.put(`${route}/:id`, controller.update);
   }
 }

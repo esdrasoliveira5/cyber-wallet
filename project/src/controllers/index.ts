@@ -24,6 +24,9 @@ abstract class Controller<T> {
 
   abstract update(req: RequestWithBody<T>, res: Response):
   Promise<typeof res>;
+
+  abstract transaction(req: RequestWithBody<T>, res: Response):
+  Promise<typeof res>;
 }
 
 export default Controller;

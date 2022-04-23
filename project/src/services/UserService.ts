@@ -19,6 +19,7 @@ class UserService extends Service<User | UserInfo> {
   create = async (obj:UserInfo):
   Promise<ResponseUser<UserInfo> | ResponseError> => {
     const validation = this.validations.userInfo(obj);
+    
     if (validation) return validation;
 
     const user = await this.model.readOne({ email: obj.email });
@@ -86,6 +87,7 @@ class UserService extends Service<User | UserInfo> {
   update = async (token: string, id: string, obj: UserInfo):
   Promise<ResponseUser<User> | ResponseError> => {
     const validation = this.validations.userUpdate(id, obj);
+
     if (validation) return validation;
 
     const jwtToken = this.jwt.validate(token);
@@ -104,6 +106,7 @@ class UserService extends Service<User | UserInfo> {
   transaction = async (token: string | undefined, obj: Transaction): 
   Promise<ResponseError | ResponseUser<User>> => {
     const validation = this.validations.transaction(obj);
+    
     if (validation) return validation;
 
     const jwtToken = this.jwt.validate(token);

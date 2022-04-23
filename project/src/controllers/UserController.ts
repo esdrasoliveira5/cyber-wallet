@@ -9,7 +9,7 @@ import { Transaction } from '../types/TransactionType';
 import { UserInfo } from '../types/UserInfoType';
 import { User } from '../types/UserType';
 
-class UserController extends Controller<User | UserInfo> {
+class UserController extends Controller<User | UserInfo > {
   private _route: string;
 
   constructor(
@@ -75,7 +75,7 @@ class UserController extends Controller<User | UserInfo> {
     return res.status(status).json(response);
   };
 
-  transaction = async (req: RequestWithBody<Transaction>, res: Response):
+  transaction = async (req:Request, res: Response):
   Promise<typeof res> => {
     const { authorization } = req.headers;
     const { body } = req;
@@ -83,7 +83,7 @@ class UserController extends Controller<User | UserInfo> {
     const {
       status,
       response,
-    } = await this.service.transaction(authorization, body);
+    } = await this.service.transaction(authorization, body as Transaction);
     
     return res.status(status).json(response);
   };

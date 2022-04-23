@@ -96,4 +96,20 @@ describe('2 - Test UserModel', () => {
       expect(response).to.be.deep.equal(payload);
     });
   });
+  describe('2.4 - method read', () => {
+    before(async () => {
+      sinon
+        .stub(user.model, 'find')
+        .resolves([payload]);
+    });
+  
+    after(()=>{
+      sinon.restore();
+    });
+  
+    it('returns a user in the db', async () => {
+      const response = await user.read();
+      expect(response).to.be.deep.equal([payload]);
+    });
+  });
 });

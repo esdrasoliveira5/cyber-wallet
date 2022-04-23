@@ -2,7 +2,7 @@ import { z } from 'zod';
 import { UserBasicInfoSchema } from './UserBasicInfoType';
 
 const TransactionSchema = z.object({
-  type: z.string(z.literal('payment')
+  type: z.string().and(z.literal('payment')
     .or(z.literal('transfer'))
     .or(z.literal('deposit'))),
   receiver: UserBasicInfoSchema,

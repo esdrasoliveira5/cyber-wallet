@@ -115,7 +115,7 @@ class UserService extends Service<User | UserInfo> {
     if (!reciver) return this.response.NOT_FOUND;
 
     const response = await this.model.sendTransaction(jwtToken.id, obj);
-    if (response === null) return this.response.NOT_FOUND;
+    if (!response) return this.response.UNAUTHORIZED;
 
     await this.model.reciveTransaction(reciver._id, obj);
 

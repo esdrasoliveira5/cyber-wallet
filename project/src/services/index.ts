@@ -6,6 +6,7 @@ import {
   ResponseUser,
 } from '../interfaces/ResponsesInterface';
 import { Login } from '../types';
+import { UserInfo } from '../types/UserInfoType';
 import Bcrypt from '../validations/Bcrypt';
 import JwToken from '../validations/JwtToken';
 import ZodValidations from '../validations/ZodValidations';
@@ -32,6 +33,9 @@ abstract class Service<T> {
 
   abstract read(token: string | undefined):
   Promise<ResponseUser<T[]> | ResponseError>;
+
+  abstract update(token: string, id: string, obj: T | Omit<UserInfo, 'email'>):
+  Promise<ResponseUser<T> | ResponseError>;
 }
 
 export default Service;

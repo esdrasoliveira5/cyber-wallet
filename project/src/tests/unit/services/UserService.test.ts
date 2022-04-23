@@ -8,6 +8,7 @@ import { Login } from '../../../types';
 const user = new UserService();
 const { expect } = chai;
 
+const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyNjJmOTZmYjk1ODQxYmJmODI2MGRjMCIsImVtYWlsIjoicm9iZXJ0b0BlbWFpbC5jb20iLCJpYXQiOjE2NTA2NTM2MzQsImV4cCI6MTY1MTI1ODQzNH0.Fl6dMrria95qYgRXe1Lsk63bmhZcUpQ6qJkkRh3LoqA'
 const payload = {
   _id: '6260bca97c58e5a0b7847cfa',
   name: 'Roberto',
@@ -239,6 +240,42 @@ describe('3 - Test UserServices', () => {
         const response = await user.readOne(token, '6260bca97c58e5a0b7847cfa');
 
         expect(response).to.be.deep.equal({ status: 404, response: { error: 'Not Found'} });
+      });
+    });
+  });
+  describe('3.4 - method read', () => {
+    describe('a) if success', () => {
+      before(async () => {
+        sinon
+        .stub(user.model, 'read')
+        .resolves([payload]);
+      });
+    
+      after(()=>{
+        sinon.restore();
+      })
+    
+      it('return a object with status 200 and the users in the db', async () => {
+        const response = await user.read(token)
+        expect(response.status).to.be.equal(200);
+        expect(response.response).to.be.deep.equal([payload]);
+      });
+    });
+    describe('b) if fail', () => {
+      before(() => {
+        sinon
+        .stub(user.model, 'read')
+        .resolves(undefined);
+      });
+
+      after(()=>{
+        sinon.restore();
+      });
+
+      it('return an object with status 401 and an error message "invalid Token"', async () => {
+        const response = await user.read('123');
+        
+        expect(response).to.be.deep.equal({ status: 401, response: { error: 'Invalid Token'} });
       });
     });
   });

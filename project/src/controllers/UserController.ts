@@ -51,6 +51,14 @@ class UserController extends Controller<User | UserInfo> {
 
     return res.status(status).json(response);
   };
+
+  read = async (req: Request, res: Response): Promise<typeof res> => {
+    const { authorization } = req.headers;
+    
+    const { status, response } = await this.service.read(authorization);
+
+    return res.status(status).json(response);
+  };
 }
 
 export default UserController;

@@ -118,4 +118,26 @@ describe('1 - Test UserController', () => {
       expect((response.json as sinon.SinonStub).calledWith(payload)).to.be.equal(true);
     });
   });
+  describe('1.4 - method read', () => {
+    before(async () => {
+      request.headers = { authorization: 'bearer token'}
+      response.status = sinon.stub().returns(response)
+      response.json = sinon.stub()
+      
+      sinon
+        .stub(user.service, 'read')
+        .resolves({ status: 200, response: [payload] });
+    });
+  
+    after(()=>{
+      sinon.restore();
+    });
+  
+    it('return the status 200 and the users', async () => {
+      await user.read(request, response);
+      
+      expect((response.status as sinon.SinonStub).calledWith(200)).to.be.equal(true);
+      expect((response.json as sinon.SinonStub).calledWith([payload])).to.be.equal(true);
+    });
+  });
 });

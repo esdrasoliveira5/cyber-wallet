@@ -1,4 +1,4 @@
-import { Response } from 'express';
+import { Response, Request } from 'express';
 import {
   RequestWithBody,
 } from '../interfaces/RequestsInterfaces';
@@ -17,6 +17,9 @@ abstract class Controller<T> {
   Promise<typeof res>;
 
   abstract readOne(req: RequestWithBody<T>, res: Response):
+  Promise<typeof res>;
+
+  abstract read(req: Request, res: Response):
   Promise<typeof res>;
 }
 

@@ -112,4 +112,35 @@ describe('2 - Test UserModel', () => {
       expect(response).to.be.deep.equal([payload]);
     });
   });
+  describe('2.5 - method update', () => {
+    before(async () => {
+      sinon
+        .stub(user.model, 'findByIdAndUpdate')
+        .resolves(payload);
+    });
+  
+    after(()=>{
+      sinon.restore();
+    })
+  
+    it('return the user updated in the db', async () => {
+      const response = await user.update({
+        name: 'Roberto',
+        lastName: 'Oliveira',
+        email: 'roberto@email.com',
+        contact: '+5511987654321',
+        password: '$2b$10$JOmGDGptDGC1.eLa3OMj0uAk4FxZT2SjLH0lbP3Uh9W7iDHGN3Lp6',
+        address: {
+          street: 'avenida',
+          number: '100A',
+          district: 'Bairro',
+          zipcode: '45687-899',
+          city: 'cidade',
+          state: 'estado',
+          country: 'pais'
+        }
+      })
+      expect(response).to.be.deep.equal(payload);
+    });
+  });
 });

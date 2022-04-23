@@ -105,7 +105,7 @@ class UserService extends Service<User | UserInfo> {
   Promise<ResponseUser<User> | ResponseError> => {
     const validation = this.validations.userUpdate(id, obj);
     if (validation) return validation;
-    
+
     const jwtToken = this.jwt.validate(token);
     if ('status' in jwtToken) return jwtToken;
 
@@ -116,8 +116,8 @@ class UserService extends Service<User | UserInfo> {
         response: { error: this.errors.UNAUTHORIZED },
       };
     }
-
-    const user = await this.model.update(id, obj);
+    const hash = await this.bcrypt.hashIt(obj.password);
+    const user = await this.model.update(id, { ...obj, password: hash });
     if (!user) {
       return { status: 404, response: { error: this.errors.NOT_FOUND } };
     }

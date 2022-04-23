@@ -59,6 +59,20 @@ class UserController extends Controller<User | UserInfo> {
 
     return res.status(status).json(response);
   };
+
+  update = async (req: RequestWithBody<UserInfo>, res: Response):
+  Promise<typeof res> => {
+    const { id } = req.params;
+    const { authorization } = req.headers;
+    const { body } = req;
+
+    const {
+      status,
+      response,
+    } = await this.service.update(authorization, id, body);
+
+    return res.status(status).json(response);
+  };
 }
 
 export default UserController;

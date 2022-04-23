@@ -140,7 +140,7 @@ describe('1 - Test UserController', () => {
       expect((response.json as sinon.SinonStub).calledWith([payload])).to.be.equal(true);
     });
   });
-  describe('1.4 - method update', () => {
+  describe('1.5 - method update', () => {
     before(async () => {
       request.headers = { authorization: 'bearer token'};
       request.params = { id: '6260bca97c58e5a0b7847cfa'};

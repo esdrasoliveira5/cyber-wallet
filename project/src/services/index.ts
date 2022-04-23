@@ -34,7 +34,7 @@ abstract class Service<T> {
   abstract read(token: string | undefined):
   Promise<ResponseUser<T[]> | ResponseError>;
 
-  abstract update(token: string, id: string, obj: T | UserInfo):
+  abstract update(token: string | undefined, id: string, obj: T | UserInfo):
   Promise<ResponseUser<T> | ResponseError>;
 }
 

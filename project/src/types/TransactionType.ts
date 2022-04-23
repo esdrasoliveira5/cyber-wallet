@@ -3,7 +3,8 @@ import { UserBasicInfoSchema } from './UserBasicInfoType';
 
 const TransactionSchema = z.object({
   type: z.string(z.literal('payment')
-    .or(z.literal('transfer'))),
+    .or(z.literal('transfer'))
+    .or(z.literal('deposit'))),
   receiver: UserBasicInfoSchema,
   transmitter: UserBasicInfoSchema,
   amount: z.number({

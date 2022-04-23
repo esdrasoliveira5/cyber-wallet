@@ -389,7 +389,6 @@ describe('5 - Test endpoint PUT /user/:id', () => {
       sinon
       .stub(user.model, 'findByIdAndUpdate')
       .rejects({ message: 'Internal Server Error'});
-      sinon
     });
     after(()=>{
       sinon.restore();
@@ -416,6 +415,129 @@ describe('5 - Test endpoint PUT /user/:id', () => {
               "country": "pais"
           }
       });
+      expect(chaiHttpResponse).to.have.status(500);
+      expect(chaiHttpResponse.body).to.deep.equal({ "error": "Erro: Internal Server Error"});
+    });
+  });
+});
+
+describe('6 - Test endpoint PUT /user/:transaction', () => {
+  describe('6.1 - if success', () => {
+    let chaiHttpResponse: Response;
+
+    before(() => {
+      sinon
+      .stub(user.model, 'findOne')
+      .resolves(payload);
+      sinon
+      .stub(user.model, 'findOne')
+      .resolves(payload);
+      sinon
+      .stub(user.model, 'findByIdAndUpdate')
+      .resolves(payload);
+    });
+    after(()=>{
+      sinon.restore();
+    });
+
+    it('a) return status 200 and the user updated with the transaction', async () => {
+      chaiHttpResponse = await chai
+         .request(server.app)
+         .put('/user/payment')
+         .set('authorization', token)
+         .send({
+          "type": "deposit",
+          "receiver": {
+            "name": "Roberto",
+            "lastName": "Oliveira",
+            "email": "roberto@email.com",
+            "contact": "+5511987654321",
+          },
+          "transmitter": {
+            "name": "Roberto",
+            "lastName": "Oliveira",
+            "email": "roberto@email.com",
+            "contact": "+5511987654321",
+          },
+          "amount": 100
+        });
+
+      expect(chaiHttpResponse).to.have.status(200);
+      expect(chaiHttpResponse.body).to.deep.equal({
+        "_id": "6260bca97c58e5a0b7847cfa",
+        "name": "Roberto",
+        "lastName": "Oliveira",
+        "email": "roberto@email.com",
+        "contact": "+5511987654321",
+        "password": "$2b$10$JOmGDGptDGC1.eLa3OMj0uAk4FxZT2SjLH0lbP3Uh9W7iDHGN3Lp6",
+        "balance": 100,
+        "transactions": [{
+          "type": "deposit",
+          "receiver": {
+            "name": "Roberto",
+            "lastName": "Oliveira",
+            "email": "roberto@email.com",
+            "contact": "+5511987654321",
+          },
+          "transmitter": {
+            "name": "Roberto",
+            "lastName": "Oliveira",
+            "email": "roberto@email.com",
+            "contact": "+5511987654321",
+          },
+          "amount": 100
+        }],
+        "address": {
+            "street": "avenida",
+            "number": "100A",
+            "district": "Bairro",
+            "zipcode": "45687-899",
+            "city": "cidade",
+            "state": "estado",
+            "country": "pais"
+        }
+      });
+    });
+  });
+  describe('6.2 - if fail', () => {
+    let chaiHttpResponse: Response;
+    before(() => {
+      sinon
+      .stub(user.model, 'findOne')
+      .resolves(payload);
+      sinon
+      .stub(user.model, 'findOne')
+      .resolves(payload);
+      sinon
+      .stub(user.model, 'findByIdAndUpdate')
+      .rejects({ message: 'Internal Server Error'});
+    });
+    after(()=>{
+      sinon.restore();
+    });
+
+    it('a) return status 500 and the error message "Internal Server Error"', async () => {
+      chaiHttpResponse = await chai
+         .request(server.app)
+         .put('/user/payment')
+         .set('authorization', token)
+         .send({
+          "type": "deposit",
+          "receiver": {
+            "name": "Roberto",
+            "lastName": "Oliveira",
+            "email": "roberto@email.com",
+            "contact": "+5511987654321",
+          },
+          "transmitter": {
+            "name": "Roberto",
+            "lastName": "Oliveira",
+            "email": "roberto@email.com",
+            "contact": "+5511987654321",
+          },
+          "amount": 100
+        });
+
       expect(chaiHttpResponse).to.have.status(500);
       expect(chaiHttpResponse.body).to.deep.equal({ "error": "Erro: Internal Server Error"});
     });

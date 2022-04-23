@@ -192,8 +192,6 @@ describe('3 - Test UserServices', () => {
   });
   describe('3.3 - method readOne', () => {
     describe('a) if success', () => {
-      const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyNjJmOTZmYjk1ODQxYmJmODI2MGRjMCIsImVtYWlsIjoicm9iZXJ0b0BlbWFpbC5jb20iLCJpYXQiOjE2NTA2NTM2MzQsImV4cCI6MTY1MTI1ODQzNH0.Fl6dMrria95qYgRXe1Lsk63bmhZcUpQ6qJkkRh3LoqA'
-
       before(async () => {
         sinon
         .stub(user.model, 'readOne')
@@ -212,11 +210,10 @@ describe('3 - Test UserServices', () => {
       });
     });
     describe('b) if fail', () => {
-      const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyNjJmOTZmYjk1ODQxYmJmODI2MGRjMCIsImVtYWlsIjoicm9iZXJ0b0BlbWFpbC5jb20iLCJpYXQiOjE2NTA2NTM2MzQsImV4cCI6MTY1MTI1ODQzNH0.Fl6dMrria95qYgRXe1Lsk63bmhZcUpQ6qJkkRh3LoqA'
       before(() => {
         sinon
         .stub(user.model, 'readOne')
-        .resolves(null);
+        .resolves(null)
       });
 
       after(()=>{
@@ -229,6 +226,25 @@ describe('3 - Test UserServices', () => {
         expect(response).to.be.deep.equal({ status: 401, response: { error: 'Invalid Token'} });
       });
 
+      it('return an object with status 401 and an error message "Unauthorized"', async () => {
+        const response = await user.readOne(token, '6260bca97c58e5a0b7847cfa');
+        
+        expect(response).to.be.deep.equal({ status: 401, response: { error: 'Unauthorized'} });
+      });
+    });
+    describe('c) if id is invalid ', () => {
+      before(() => {
+        sinon
+        .stub(user.model, 'readOne')
+        .onFirstCall()
+        .resolves(payload)
+        .onSecondCall()
+        .resolves(null)
+      });
+
+      after(()=>{
+        sinon.restore();
+      });
 
       it('return an object with status 400 and an error message "_id must have 24 hexadecimal characters"', async () => {
         const response = await user.readOne(token, '1234');
@@ -238,7 +254,6 @@ describe('3 - Test UserServices', () => {
 
       it('return an object with status 404 and an error message "Not Found"', async () => {
         const response = await user.readOne(token, '6260bca97c58e5a0b7847cfa');
-
         expect(response).to.be.deep.equal({ status: 404, response: { error: 'Not Found'} });
       });
     });
@@ -246,6 +261,9 @@ describe('3 - Test UserServices', () => {
   describe('3.4 - method read', () => {
     describe('a) if success', () => {
       before(async () => {
+        sinon
+        .stub(user.model, 'readOne')
+        .resolves(payload)
         sinon
         .stub(user.model, 'read')
         .resolves([payload]);
@@ -264,6 +282,9 @@ describe('3 - Test UserServices', () => {
     describe('b) if fail', () => {
       before(() => {
         sinon
+        .stub(user.model, 'readOne')
+        .resolves(null)
+        sinon
         .stub(user.model, 'read')
         .resolves(undefined);
       });
@@ -276,6 +297,11 @@ describe('3 - Test UserServices', () => {
         const response = await user.read('123');
         
         expect(response).to.be.deep.equal({ status: 401, response: { error: 'Invalid Token'} });
+      });
+      it('return an object with status 401 and an error message "Unauthorized"', async () => {
+        const response = await user.read(token);
+        
+        expect(response).to.be.deep.equal({ status: 401, response: { error: 'Unauthorized'} });
       });
     });
   });

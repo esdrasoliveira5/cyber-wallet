@@ -1,5 +1,4 @@
 import { Model as M, Document } from 'mongoose';
-import { date } from 'zod';
 import { Model } from '../interfaces/ModelInterface';
 import { Email, ID } from '../types';
 import { Transaction } from '../types/TransactionType';

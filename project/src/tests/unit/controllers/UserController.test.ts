@@ -140,4 +140,44 @@ describe('1 - Test UserController', () => {
       expect((response.json as sinon.SinonStub).calledWith([payload])).to.be.equal(true);
     });
   });
+  describe('1.4 - method update', () => {
+    before(async () => {
+      request.headers = { authorization: 'bearer token'};
+      request.params = { id: '6260bca97c58e5a0b7847cfa'};
+      request.body = {
+        name: 'Roberto',
+        lastName: 'Oliveira',
+        email: 'roberto@email.com',
+        contact: '+5511987654321',
+        password: 'roberto_password',
+        address: {
+          street: 'avenida',
+          number: '100A',
+          district: 'Bairro',
+          zipcode: '45687-899',
+          city: 'cidade',
+          state: 'estado',
+          country: 'pais'
+        }
+      };
+
+      response.status = sinon.stub().returns(response)
+      response.json = sinon.stub()
+      
+      sinon
+        .stub(user.service, 'update')
+        .resolves({ status: 200, response: payload });
+    });
+  
+    after(()=>{
+      sinon.restore();
+    });
+  
+    it('return the status 200 and the user updated', async () => {
+      await user.read(request, response);
+      
+      expect((response.status as sinon.SinonStub).calledWith(200)).to.be.equal(true);
+      expect((response.json as sinon.SinonStub).calledWith(payload)).to.be.equal(true);
+    });
+  });
 });

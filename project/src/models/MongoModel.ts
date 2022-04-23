@@ -18,13 +18,31 @@ abstract class MongoModel<T> implements Model<T> {
   Promise<T | null> =>
     this.model.findByIdAndUpdate(id, { ...obj }, { new: true });
 
-  transaction = async (id: string, obj: Transaction):
-  Promise<T | null> =>
-    this.model.findByIdAndUpdate(
+  reciveTransaction = async (id: string, obj: Transaction):
+  Promise<T | null> => {
+    const response = this.model.findByIdAndUpdate(
       id, 
-      { $push: { transactions: { $currentDate: { ...obj, date: true } } } }, 
+      { 
+        $inc: { balance: obj.amount },
+        $push: { transactions: { $currentDate: { ...obj, date: true } } },
+      }, 
       { new: true },
     );
+    return response;
+  };
+
+  sendTransaction = async (id: string, obj: Transaction):
+  Promise<T | null> => {
+    const response = this.model.findByIdAndUpdate(
+      id, 
+      { 
+        $inc: { balance: -obj.amount },
+        $push: { transactions: { $currentDate: { ...obj, date: true } } },
+      }, 
+      { new: true },
+    );
+    return response;
+  };
 }
 
 export default MongoModel;

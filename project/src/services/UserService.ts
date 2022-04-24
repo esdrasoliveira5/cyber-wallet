@@ -133,6 +133,8 @@ class UserService extends Service<User | UserInfo> {
     const jwtToken = this.jwt.validate(token);
     if ('status' in jwtToken) return jwtToken;
 
+    if (jwtToken.email !== receiver.email) return this.response.UNAUTHORIZED;
+    
     const response = await this.model.reciveTransaction(receiver.email, obj);
 
     if (!response) return this.response.UNAUTHORIZED;
@@ -153,7 +155,7 @@ class UserService extends Service<User | UserInfo> {
     const jwtToken = this.jwt.validate(token);
     if ('status' in jwtToken) return jwtToken;
 
-    const userToken = await this.model.readOne({ _id: jwtToken.id }) as UserId;
+    const userToken = await this.model.readOne({ _id: id });
     if (!userToken) return this.response.UNAUTHORIZED;
 
     const user = await this.model.delete(id);

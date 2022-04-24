@@ -33,7 +33,7 @@ abstract class MongoModel<T> implements Model<T> {
 
   sendTransaction = async (email: string, obj: Transaction):
   Promise<T | null> => {
-    const response = this.model.findByIdAndUpdate(
+    const response = this.model.findOneAndUpdate(
       { email },
       { 
         $inc: { balance: -obj.amount },

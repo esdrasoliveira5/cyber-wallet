@@ -10,9 +10,9 @@ export interface Model<T> {
 
   update(id: string, obj: T): Promise<T | null>
 
-  reciveTransaction(id: string, obj: Transaction): Promise<T | null>
+  reciveTransaction(email: string, obj: Transaction): Promise<T | null>
 
-  sendTransaction(id: string, obj: Transaction): Promise<T | null>
+  sendTransaction(email: string, obj: Transaction): Promise<T | null>
 
   delete(id:string): Promise<T | null>;
 }

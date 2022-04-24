@@ -298,6 +298,7 @@
   <br/>
 
   Retorna status ``200`` e o usuario com o saldo e as transações atualizadas.
+  *Obs: Apenas 3 tipos de transacoes disponiveis, sao elas "payment", "transfer" e "deposit"*
 
   - Exemplo `request headers` 
     ``` json
@@ -306,146 +307,135 @@
         }
     ```
 
+  - Exemplo `request body` 
+    ``` json
+        {
+            "type": "transfer",
+            "receiver": {
+                "name": "Maria",
+                "lastName": "Oliveira",
+                "email": "maria@email.com",
+                "contact": "+5511987654321"
+            },
+            "transmitter": {
+                "name": "Pedro",
+                "lastName": "Pereira",
+                "email": "pedro@email.com",
+                "contact": "+5511963852741"
+            },
+            "amount": 100
+        }
+    ```
+
+  - Exemplo `request body` 
+    ``` json
+        {
+            "type": "deposit",
+            "receiver": {
+                "name": "Pedro",
+                "lastName": "Pereira",
+                "email": "pedro@email.com",
+                "contact": "+5511963852741"
+            },
+            "transmitter": {
+                "name": "Pedro",
+                "lastName": "Pereira",
+                "email": "pedro@email.com",
+                "contact": "+5511963852741"
+            },
+            "amount": 60
+        }
+    ```
+
+  - Exemplo `request body` 
+    ``` json
+        {
+            "type": "payment",
+            "receiver": {
+                "name": "Pedro",
+                "lastName": "Pereira",
+                "email": "pedro@email.com",
+                "contact": "+5511963852741"
+            },
+            "transmitter": {
+                "name": "Maria",
+                "lastName": "Oliveira",
+                "email": "maria@email.com",
+                "contact": "+5511987654321"
+            },
+            "amount": 500
+        }
+    ```
   - Exemplo `response body` 
     ``` json
         {
-            "_id": "6264bfcebab4601fd42c7181",
-            "name": "Luisa",
-            "lastName": "Oliveira",
-            "email": "luisa@email.com",
-            "contact": "+5511987654321",
-            "password": "$2b$10$/GolCC1IhMuhc4RCReOBdOHMcG3/0qAD2TLVgflxH.T3gcJ0nGRaq",
+            "_id": "6264c85fbab4601fd42c718d",
+            "name": "Pedro",
+            "lastName": "Pereira",
+            "email": "pedro@email.com",
+            "contact": "+5511963852741",
+            "password": "$2b$10$/GolCC1IhMuhc4RCReOBdO0eFeos76KTfw8Huxtkx4CYUTRLW7.GG",
             "address": {
-                "street": "Av. Azaleia",
-                "number": "1050A",
-                "district": "Florestal",
+                "street": "Rua das Flores",
+                "number": "500",
+                "district": "Santo Agostinho",
                 "zipcode": "45687-899",
-                "city": "Caetanopolis",
+                "city": "Belo Horizonte",
                 "state": "MG",
                 "country": "Brasil"
             },
-            "balance": 0,
-            "transactions": []
+            "balance": 200,
+            "transactions": [
+                {
+                    "type": "deposit",
+                    "receiver": {
+                        "name": "Pedro",
+                        "lastName": "Pereira",
+                        "email": "pedro@email.com",
+                        "contact": "+5511963852741"
+                    },
+                    "transmitter": {
+                        "name": "Pedro",
+                        "lastName": "Pereira",
+                        "email": "pedro@email.com",
+                        "contact": "+5511963852741"
+                    },
+                    "amount": 50,
+                    "date": "2022-04-24T04:29:02.860Z"
+                },
+                {
+                    "type": "transfer",
+                    "receiver": {
+                        "name": "Maria",
+                        "lastName": "Oliveira",
+                        "email": "maria@email.com",
+                        "contact": "+5511987654321"
+                    },
+                    "transmitter": {
+                        "name": "Pedro",
+                        "lastName": "Pereira",
+                        "email": "pedro@email.com",
+                        "contact": "+5511963852741"
+                    },
+                    "amount": 50,
+                    "date": "2022-04-24T04:46:56.840Z"
+                },
+            ]
         }
     ```
 
   <br/>
 
-
-### **Cadastrar uma nova moto** 
-##### `POST` /motorcycles
-
+### **Deletar um usuario**
+##### `DELETE` /user/:id
   <br/>
 
-  Esse endpoint retorna status ``201`` e a moto cadastrada.
-
-  *Obs: Apenas as  tres categorias podem ser cadastradas Street, Custom ou Trail.* 
-
-  - Exemplo `request body` 
-    ``` json
-      {
-        "model": "Honda CG Titan 125",
-        "year": 1963,
-        "color": "black",
-        "buyValue": 3500,
-        "category": "Street",
-        "engineCapacity": 12
-      }
-    ```
-
-  - Exemplo `response body`
-    ```json
-        {
-          "model": "Honda CG Titan 125",
-          "year": 1963,
-          "color": "black",
-          "buyValue": 3500,
-          "category": "Street",
-          "engineCapacity": 125,
-          "_id": "6258404d1dabf1c8f26756e0"
-        }
-    ```
-  <br/>
-
-### **Lista todos as motos**
-##### `GET` /motorcycles
-<br/>
-
-  Retorna status ``200`` e todos as motos cadastradas.
-
-  - Exemplo `response body`
-    ```json
-        [
-            {
-              "model": "Honda CG Titan 125",
-              "year": 1963,
-              "color": "black",
-              "buyValue": 3500,
-              "category": "Street",
-              "engineCapacity": 125,
-              "_id": "6258404d1dabf1c8f26756e0"
-            },
-            ...
-        ]
-    ```
-<br/>
-
-### **Listar uma única moto através do seu id**
-##### `GET` /motorcycles/id
-  <br/>
-
-  Retorna status ``200`` e todas as motos cadastradas com o id especificado.
-
-  - Exemplo `response body` 
+  - Exemplo `request headers` 
     ``` json
         {
-          "model": "Honda CG Titan 125",
-          "year": 1963,
-          "color": "black",
-          "buyValue": 3500,
-          "category": "Street",
-          "engineCapacity": 125,
-          "_id": "6258404d1dabf1c8f26756e0"
+            "Authorization": "bearer token",
         }
     ```
-
-  <br/>
-
-### **Atualizar o registro de uma moto através do seu id**
-##### `PUT` /motorcycles/id
-  <br/>
-
-  Retorna status ``200`` e a moto atualizada.
-
-  - Exemplo `request body` 
-    ``` json
-      {
-        "model": "Honda CG Titan 125",
-        "year": 1963,
-        "color": "black",
-        "buyValue": 3500,
-        "category": "Street",
-        "engineCapacity": 125
-      }
-    ```
-
-
-  - Exemplo `response body` 
-    ``` json
-        {
-          "model": "Honda CG Titan 125",
-          "year": 1963,
-          "color": "black",
-          "buyValue": 3500,
-          "category": "Street",
-          "engineCapacity": 125,
-          "_id": "6258404d1dabf1c8f26756e0"
-        }
-    ```
-
-### **Excluir os registros de uma moto**
-##### `DELETE` /motorcycles/id
-  <br/>
 
   Retorna status ``204`` sem body.
 

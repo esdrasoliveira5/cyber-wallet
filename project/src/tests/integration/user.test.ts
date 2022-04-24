@@ -571,3 +571,56 @@ describe('6 - Test endpoint PUT /user/transaction', () => {
     });
   });
 });
+
+
+describe('7 - Test endpoint DELETE /user/:id', () => {
+  describe('7.1 - if success', () => {
+    let chaiHttpResponse: Response;
+
+    before(() => {
+      sinon
+      .stub(user.model, 'findOne')
+      .resolves(payload);
+      sinon
+      .stub(user.model, 'findByIdAndDelete')
+      .resolves(payload);
+    });
+    after(()=>{
+      sinon.restore();
+    });
+
+    it('a) return status 200 and the user updated', async () => {
+      chaiHttpResponse = await chai
+         .request(server.app)
+         .delete('/user/6260bca97c58e5a0b7847cfa')
+         .set('authorization', token)
+
+      expect(chaiHttpResponse).to.have.status(204);
+      expect(chaiHttpResponse.body).to.deep.equal([]);
+    });
+  });
+  describe('5.2 - if fail', () => {
+    let chaiHttpResponse: Response;
+    before(() => {
+      sinon
+      .stub(user.model, 'findOne')
+      .resolves(payload);
+      sinon
+      .stub(user.model, 'findByIdAndDelete')
+      .rejects({ message: 'Internal Server Error'});
+    });
+    after(()=>{
+      sinon.restore();
+    });
+
+    it('a) return status 500 and the error message "Internal Server Error"', async () => {
+      chaiHttpResponse = await chai
+         .request(server.app)
+         .delete('/user/6260bca97c58e5a0b7847cfa')
+         .set('authorization', token)
+
+      expect(chaiHttpResponse).to.have.status(500);
+      expect(chaiHttpResponse.body).to.deep.equal({ "error": "Erro: Internal Server Error"});
+    });
+  });
+});

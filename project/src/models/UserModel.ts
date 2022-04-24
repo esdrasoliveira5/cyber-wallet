@@ -13,7 +13,7 @@ const userSchema = new Schema<UserDocument>(
     password: String,
     address: Object,
     balance: Number,
-    transactions: Object,
+    transactions: Array,
   },
   { versionKey: false },
 );

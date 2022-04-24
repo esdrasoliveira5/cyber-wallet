@@ -174,7 +174,7 @@ describe('2 - Test UserModel', () => {
       expect(response).to.be.deep.equal(payload);
     });
   });
-  describe('2.6 - method sendTransaction', () => {
+  describe('2.7 - method sendTransaction', () => {
     before(async () => {
       sinon
         .stub(user.model, 'findByIdAndUpdate')
@@ -202,6 +202,22 @@ describe('2 - Test UserModel', () => {
         },
         amount: 100
       })
+      expect(response).to.be.deep.equal(payload);
+    });
+  });
+  describe('2.8 - method delete', () => {
+    before(async () => {
+      sinon
+        .stub(user.model, 'findByIdAndDelete')
+        .resolves(payload);
+    });
+  
+    after(()=>{
+      sinon.restore();
+    })
+  
+    it('return the user updated in the db', async () => {
+      const response = await user.delete('6260bca97c58e5a0b7847cfa')
       expect(response).to.be.deep.equal(payload);
     });
   });

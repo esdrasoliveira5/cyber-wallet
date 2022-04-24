@@ -572,7 +572,6 @@ describe('6 - Test endpoint PUT /user/transaction', () => {
   });
 });
 
-
 describe('7 - Test endpoint DELETE /user/:id', () => {
   describe('7.1 - if success', () => {
     let chaiHttpResponse: Response;

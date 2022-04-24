@@ -184,7 +184,7 @@ describe('1 - Test UserController', () => {
     before(async () => {
       request.headers = { authorization: 'bearer token'};
       request.body = {
-        type: "deposit",
+        type: "transfer",
         receiver: {
           name: "Roberto",
           lastName: "Oliveira",

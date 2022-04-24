@@ -57,6 +57,9 @@ abstract class Service<T> {
   abstract transaction(token: string | undefined, obj: T | Transaction):
   Promise<ResponseUser<T> | ResponseError>;
 
+  abstract deposit(token: string | undefined, obj: T | Transaction):
+  Promise<ResponseUser<T> | ResponseError>;
+
   abstract delete(token: string | undefined, id: string):
   Promise<ResponseDelete | ResponseError>;
 }

@@ -18,10 +18,10 @@ abstract class MongoModel<T> implements Model<T> {
   Promise<T | null> =>
     this.model.findByIdAndUpdate(id, { ...obj }, { new: true });
 
-  reciveTransaction = async (id: string, obj: Transaction):
+  reciveTransaction = async (email: string, obj: Transaction):
   Promise<T | null> => {
-    const response = this.model.findByIdAndUpdate(
-      id, 
+    const response = this.model.findOneAndUpdate(
+      { email }, 
       { 
         $inc: { balance: obj.amount },
         $push: { transactions: { ...obj, date: new Date() } },
@@ -31,10 +31,10 @@ abstract class MongoModel<T> implements Model<T> {
     return response;
   };
 
-  sendTransaction = async (id: string, obj: Transaction):
+  sendTransaction = async (email: string, obj: Transaction):
   Promise<T | null> => {
     const response = this.model.findByIdAndUpdate(
-      id, 
+      { email },
       { 
         $inc: { balance: -obj.amount },
         $push: { transactions: { ...obj, date: new Date() } },

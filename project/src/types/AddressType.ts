@@ -8,7 +8,7 @@ const AddressSchema = z.object({
   number: z.string({
     required_error: 'number is required',
     invalid_type_error: 'number must be a string',
-  }).min(3, { message: 'number must be 3 or more characters long' }),
+  }),
   district: z.string({
     required_error: 'district is required',
     invalid_type_error: 'district must be a string',

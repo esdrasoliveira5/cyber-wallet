@@ -75,15 +75,24 @@ class UserController extends Controller<User | UserInfo > {
     return res.status(status).json(response);
   };
 
-  transaction = async (req:Request, res: Response):
+  transaction = async (req:RequestWithBody<Transaction>, res: Response):
   Promise<typeof res> => {
     const { authorization } = req.headers;
     const { body } = req;
 
+    if (body.type === 'deposit') {
+      const { status, response } = await this.service.deposit(
+        authorization,
+        body,
+      );
+      
+      return res.status(status).json(response);
+    }
+
     const {
       status,
       response,
-    } = await this.service.transaction(authorization, body as Transaction);
+    } = await this.service.transaction(authorization, body);
     
     return res.status(status).json(response);
   };

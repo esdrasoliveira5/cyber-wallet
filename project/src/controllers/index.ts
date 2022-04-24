@@ -4,6 +4,7 @@ import {
 } from '../interfaces/RequestsInterfaces';
 
 import Service from '../services';
+import { Transaction } from '../types/TransactionType';
 
 abstract class Controller<T> {
   abstract route: string;
@@ -25,7 +26,7 @@ abstract class Controller<T> {
   abstract update(req: RequestWithBody<T>, res: Response):
   Promise<typeof res>;
 
-  abstract transaction(req: RequestWithBody<T>, res: Response):
+  abstract transaction(req: RequestWithBody<Transaction>, res: Response):
   Promise<typeof res>;
 
   abstract delete(req: Request, res: Response):

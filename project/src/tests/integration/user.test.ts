@@ -430,7 +430,7 @@ describe('6 - Test endpoint PUT /user/transaction', () => {
       .stub(user.model, 'findOne')
       .resolves(payload);
       sinon
-      .stub(user.model, 'findByIdAndUpdate')
+      .stub(user.model, 'findOneAndUpdate')
       .resolves({
         _id: '6260bca97c58e5a0b7847cfa',
         name: 'Roberto',
@@ -537,7 +537,7 @@ describe('6 - Test endpoint PUT /user/transaction', () => {
       .stub(user.model, 'findOne')
       .resolves(payload);
       sinon
-      .stub(user.model, 'findByIdAndUpdate')
+      .stub(user.model, 'findOneAndUpdate')
       .rejects({ message: 'Internal Server Error'});
     });
     after(()=>{

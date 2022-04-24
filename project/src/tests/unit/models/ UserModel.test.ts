@@ -146,7 +146,7 @@ describe('2 - Test UserModel', () => {
   describe('2.6 - method reciveTransaction', () => {
     before(async () => {
       sinon
-        .stub(user.model, 'findByIdAndUpdate')
+        .stub(user.model, 'findOneAndUpdate')
         .resolves(payload);
     });
   
@@ -177,7 +177,7 @@ describe('2 - Test UserModel', () => {
   describe('2.7 - method sendTransaction', () => {
     before(async () => {
       sinon
-        .stub(user.model, 'findByIdAndUpdate')
+        .stub(user.model, 'findOneAndUpdate')
         .resolves(payload);
     });
   

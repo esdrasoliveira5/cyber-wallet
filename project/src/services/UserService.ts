@@ -106,23 +106,37 @@ class UserService extends Service<User | UserInfo> {
 
   transaction = async (token: string | undefined, obj: Transaction): 
   Promise<ResponseError | ResponseUser<User>> => {
+    const { receiver, transmitter } = obj;
     const validation = this.validations.transaction(obj);
-    
     if (validation) return validation;
 
     const jwtToken = this.jwt.validate(token);
     if ('status' in jwtToken) return jwtToken;
 
-    const reciver = await this.model.readOne(
-      { email: obj.receiver.email },
-    ) as UserId;
+    const reciver = await this.model.readOne({ email: receiver.email });
     if (!reciver) return this.response.NOT_FOUND;
 
-    const response = await this.model.sendTransaction(jwtToken.id, obj);
+    const response = await this.model.sendTransaction(transmitter.email, obj);
     if (!response) return this.response.UNAUTHORIZED;
 
-    await this.model.reciveTransaction(reciver._id, obj);
+    await this.model.reciveTransaction(receiver.email, obj);
 
+    return { status: this.status.OK, response: response as UserId };
+  };
+
+  deposit = async (token: string | undefined, obj: Transaction): 
+  Promise<ResponseError | ResponseUser<User>> => {
+    const { receiver } = obj;
+    const validation = this.validations.transaction(obj);
+    if (validation) return validation;
+
+    const jwtToken = this.jwt.validate(token);
+    if ('status' in jwtToken) return jwtToken;
+
+    const response = await this.model.reciveTransaction(receiver.email, obj);
+
+    if (!response) return this.response.UNAUTHORIZED;
+    
     return { status: this.status.OK, response: response as UserId };
   };
 

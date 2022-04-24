@@ -1,0 +1,82 @@
+{
+  "openapi":  "3.0.0",
+  "info": {
+    "title": "Cyber Wallet",
+    "description": "Documentation from cyber-wallet api.",
+    "version": "1.0.0"
+  },
+  "basePath": "/",
+  "paths": {
+    "/user": {
+      "post": {
+        "tags": ["Users"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type":"string"
+                  },
+                  "lastName": {
+                    "type":"string"
+                  },
+                  "email": {
+                    "type":"string"
+                  },
+                  "contact": {
+                    "type":"string"
+                  },
+                  "password": {
+                    "type":"string"
+                  },
+                  "address": {
+                      "type": "object",
+                      "properties": {
+                        "street": {
+                          "type":"string"
+                        },
+                        "number": {
+                          "type":"string"
+                        },
+                        "district": {
+                          "type":"string"
+                        },
+                        "zipcode": {
+                          "type":"string"
+                        },
+                        "city": {
+                          "type":"string"
+                        },
+                        "state": {
+                          "type":"string"
+                        },
+                        "country": {
+                          "type":"string"
+                        }
+                      }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "500": {
+            "description": "Internal Server Error"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "409": {
+            "description": "Conflict"
+          },
+          "201": {
+            "description": "user created"
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,6 +1,9 @@
 import express, { Router } from 'express';
+import swaggerUi from 'swagger-ui-express';
 import connectToDatabase from './connection';
 import HanldeError from './middlewares/HandleError';
+
+import swaggerDocument from './swagger.json';
 
 require('express-async-errors');
 
@@ -12,6 +15,11 @@ class App {
   constructor() {
     this.app = express();
     this.app.use(express.json());
+    this.app.use(
+      '/api-docs', 
+      swaggerUi.serve,
+      swaggerUi.setup(swaggerDocument),
+    );
   }
 
   public startServer(PORT: string | number = 3001): void {

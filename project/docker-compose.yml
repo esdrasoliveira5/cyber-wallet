@@ -1,5 +1,14 @@
 version: '3.9'
 services:
+  backend:
+    build: .
+    container_name: cyber-wallet
+    ports:
+      - 3001:3001
+    depends_on:
+      - mongodb
+    environment:
+      - DATABASE_URL=mongodb://mongodb:27017/cyberWallet
   mongodb:
     image: mongo
     ports:

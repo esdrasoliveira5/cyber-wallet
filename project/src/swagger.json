@@ -6,6 +6,15 @@
     "version": "1.0.0"
   },
   "basePath": "/",
+  "components": {
+    "securitySchemes": {
+      "Authorization": {
+        "type": "apiKey",
+        "in": "header",       
+        "name": "Authorization"
+      }
+    }
+  },
   "paths": {
     "/user": {
       "post": {
@@ -76,6 +85,21 @@
             "description": "User created"
           }
         }
+      },
+      "get": {
+        "tags": ["Users"],
+        "security":[{"Authorization": []}],
+        "responses": {
+          "500": {
+            "description": "Internal Server Error"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "200": {
+            "description": "Users"
+          }
+        }
       }
     },
     "/user/login": {
@@ -113,6 +137,228 @@
           },
           "200": {
             "description": "User Loged"
+          }
+        }
+      }
+    },
+    "/user/{id}": {
+      "get": {
+        "tags": ["Users"],
+        "security":[{"Authorization": []}],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "500": {
+            "description": "Internal Server Error"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "400": {
+            "description": "_id must have 24 hexadecimal characters"
+          },
+          "200": {
+            "description": "Return User"
+          }
+        }
+      },
+      "put": {
+        "tags": ["Users"],
+        "security":[{"Authorization": []}],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type":"string"
+                  },
+                  "lastName": {
+                    "type":"string"
+                  },
+                  "email": {
+                    "type":"string"
+                  },
+                  "contact": {
+                    "type":"string"
+                  },
+                  "password": {
+                    "type":"string"
+                  },
+                  "address": {
+                      "type": "object",
+                      "properties": {
+                        "street": {
+                          "type":"string"
+                        },
+                        "number": {
+                          "type":"string"
+                        },
+                        "district": {
+                          "type":"string"
+                        },
+                        "zipcode": {
+                          "type":"string"
+                        },
+                        "city": {
+                          "type":"string"
+                        },
+                        "state": {
+                          "type":"string"
+                        },
+                        "country": {
+                          "type":"string"
+                        }
+                      }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "500": {
+            "description": "Internal Server Error"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "200": {
+            "description": "Updated User"
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Users"],
+        "security":[{"Authorization": []}],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "500": {
+            "description": "Internal Server Error"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "400": {
+            "description": "_id must have 24 hexadecimal characters"
+          },
+          "200": {
+            "description": "Delete User"
+          }
+        }
+      }
+    },
+    "/user/transaction": {
+      "put": {
+        "tags": ["Users"],
+        "security":[{"Authorization": []}],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type":"string",
+                    "pattern": "payment or transfer or deposit"
+                  },
+                  "amount": {
+                    "type":"number"
+                  },
+                  "receiver": {
+                    "type": "object",
+                    "properties": {
+                      "name": {
+                        "type":"string"
+                      },
+                      "lastName": {
+                        "type":"string"
+                      },
+                      "email": {
+                        "type":"string"
+                      },
+                      "contact": {
+                        "type":"string"
+                      }
+                    }
+                  },
+                  "transmitter": {
+                      "type": "object",
+                      "properties": {
+                        "name": {
+                          "type":"string"
+                        },
+                        "lastName": {
+                          "type":"string"
+                        },
+                        "email": {
+                          "type":"string"
+                        },
+                        "contact": {
+                          "type":"string"
+                        }
+                      }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "500": {
+            "description": "Internal Server Error"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "200": {
+            "description": "Updated User"
           }
         }
       }

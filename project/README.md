@@ -281,7 +281,7 @@
   <br/>
 
 ### **Atualiza um usuario pelo id**
-##### `PUT` /user/id
+##### `PUT` /user/:id
   <br/>
 
   Retorna status ``200`` e o usuario atualizado.

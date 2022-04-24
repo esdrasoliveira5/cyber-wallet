@@ -27,6 +27,9 @@ abstract class Controller<T> {
 
   abstract transaction(req: RequestWithBody<T>, res: Response):
   Promise<typeof res>;
+
+  abstract delete(req: Request, res: Response):
+  Promise<typeof res>;
 }
 
 export default Controller;

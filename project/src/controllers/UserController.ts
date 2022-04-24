@@ -87,6 +87,16 @@ class UserController extends Controller<User | UserInfo > {
     
     return res.status(status).json(response);
   };
+
+  delete = async (req: Request, res: Response):
+  Promise<typeof res> => {
+    const { id } = req.params;
+    const { authorization } = req.headers;
+
+    const { status, response } = await this.service.delete(authorization, id);
+    
+    return res.status(status).json(response);
+  };
 }
 
 export default UserController;

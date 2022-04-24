@@ -237,7 +237,7 @@ describe('1 - Test UserController', () => {
     });
   
     it('return the status 204', async () => {
-      await user.update(request, response);
+      await user.delete(request, response);
       
       expect((response.status as sinon.SinonStub).calledWith(204)).to.be.equal(true);
       expect((response.json as sinon.SinonStub).calledWith([])).to.be.equal(true);

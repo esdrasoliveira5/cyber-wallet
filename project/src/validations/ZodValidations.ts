@@ -1,4 +1,5 @@
 import { MessageErrors, StatusCodes } from '../enums';
+import fetchViaCep from '../fetch';
 import { ResponseError } from '../interfaces/ResponsesInterface';
 import { Transaction, TransactionSchema } from '../types/TransactionType';
 import { UserBasicInfo, UserBasicInfoSchema } from '../types/UserBasicInfoType';
@@ -21,7 +22,7 @@ class ZodValidations {
     }
   };
 
-  userInfo = (obj: UserInfo): void | ResponseError => {
+  userInfo = async (obj: UserInfo): Promise< void | ResponseError> => {
     const userError = this.userBasic(obj);
     if (userError) return userError;
 
@@ -32,10 +33,19 @@ class ZodValidations {
         response: { error: parsedUser.error },
       };
     }
+
+    const cep = await fetchViaCep(obj.address.zipcode);
+    
+    if ('erro' in cep) {
+      return {
+        status: this.status.BAD_REQUEST,
+        response: { error: 'invalid zipcode' },
+      };
+    }
   };
 
-  user = (obj: User): void | ResponseError => {
-    const userError = this.userInfo(obj);
+  user = async (obj: User): Promise<void | ResponseError> => {
+    const userError = await this.userInfo(obj);
     if (userError) return userError;
 
     const parsedWorker = UserSchema.safeParse(obj);
@@ -67,8 +77,9 @@ class ZodValidations {
     }
   };
 
-  userUpdate = (id: string, obj: UserInfo): void | ResponseError => {
-    const userError = this.userInfo(obj);
+  userUpdate = async (id: string, obj: UserInfo):
+  Promise<void | ResponseError> => {
+    const userError = await this.userInfo(obj);
     if (userError) return userError;
     
     const parsedId = UserIdSchema.safeParse({ _id: id });

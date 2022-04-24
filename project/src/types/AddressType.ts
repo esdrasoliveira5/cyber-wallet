@@ -16,7 +16,7 @@ const AddressSchema = z.object({
   zipcode: z.string({
     required_error: 'zipcode is required',
     invalid_type_error: 'zipcode must be a number',
-  }).length(9, { message: 'zipcode must be 9 characters long' }),
+  }).min(8, { message: 'zipcode must be 8 characters long' }),
   city: z.string({
     required_error: 'city is required',
     invalid_type_error: 'city must be a string',

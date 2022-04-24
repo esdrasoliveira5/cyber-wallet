@@ -25,7 +25,7 @@ const payload = {
     street: 'avenida',
     number: '100A',
     district: 'Bairro',
-    zipcode: '45687-899',
+    zipcode: '01001000',
     city: 'cidade',
     state: 'estado',
     country: 'pais'
@@ -62,7 +62,7 @@ describe('1 - Test endpoint POST /user', () => {
               "street": "avenida",
               "number": "100A",
               "district": "Bairro",
-              "zipcode": "45687-899",
+              "zipcode": "01001000",
               "city": "cidade",
               "state": "estado",
               "country": "pais"
@@ -82,7 +82,7 @@ describe('1 - Test endpoint POST /user', () => {
             "street": "avenida",
             "number": "100A",
             "district": "Bairro",
-            "zipcode": "45687-899",
+            "zipcode": "01001000",
             "city": "cidade",
             "state": "estado",
             "country": "pais"
@@ -120,7 +120,7 @@ describe('1 - Test endpoint POST /user', () => {
               "street": "avenida",
               "number": "100A",
               "district": "Bairro",
-              "zipcode": "45687-899",
+              "zipcode": "01001000",
               "city": "cidade",
               "state": "estado",
               "country": "pais"
@@ -168,7 +168,7 @@ describe('2 - Test endpoint POST /user/login', () => {
               "street": "avenida",
               "number": "100A",
               "district": "Bairro",
-              "zipcode": "45687-899",
+              "zipcode": "01001000",
               "city": "cidade",
               "state": "estado",
               "country": "pais"
@@ -240,7 +240,7 @@ describe('3 - Test endpoint GET /user/:id', () => {
             "street": "avenida",
             "number": "100A",
             "district": "Bairro",
-            "zipcode": "45687-899",
+            "zipcode": "01001000",
             "city": "cidade",
             "state": "estado",
             "country": "pais"
@@ -352,7 +352,7 @@ describe('5 - Test endpoint PUT /user/:id', () => {
               "street": "avenida",
               "number": "100A",
               "district": "Bairro",
-              "zipcode": "45687-899",
+              "zipcode": "01001000",
               "city": "cidade",
               "state": "estado",
               "country": "pais"
@@ -372,7 +372,7 @@ describe('5 - Test endpoint PUT /user/:id', () => {
             "street": "avenida",
             "number": "100A",
             "district": "Bairro",
-            "zipcode": "45687-899",
+            "zipcode": "01001000",
             "city": "cidade",
             "state": "estado",
             "country": "pais"
@@ -409,7 +409,7 @@ describe('5 - Test endpoint PUT /user/:id', () => {
               "street": "avenida",
               "number": "100A",
               "district": "Bairro",
-              "zipcode": "45687-899",
+              "zipcode": "01001000",
               "city": "cidade",
               "state": "estado",
               "country": "pais"
@@ -460,7 +460,7 @@ describe('6 - Test endpoint PUT /user/transaction', () => {
           street: 'avenida',
           number: '100A',
           district: 'Bairro',
-          zipcode: '45687-899',
+          zipcode: '01001000',
           city: 'cidade',
           state: 'estado',
           country: 'pais'
@@ -522,7 +522,7 @@ describe('6 - Test endpoint PUT /user/transaction', () => {
             "street": "avenida",
             "number": "100A",
             "district": "Bairro",
-            "zipcode": "45687-899",
+            "zipcode": "01001000",
             "city": "cidade",
             "state": "estado",
             "country": "pais"

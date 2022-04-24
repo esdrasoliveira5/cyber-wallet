@@ -21,7 +21,7 @@ const payload = {
     street: 'avenida',
     number: '100A',
     district: 'Bairro',
-    zipcode: '45687-899',
+    zipcode: '01001000',
     city: 'cidade',
     state: 'estado',
     country: 'pais'
@@ -41,7 +41,7 @@ describe('1 - Test UserController', () => {
           street: 'avenida',
           number: '100A',
           district: 'Bairro',
-          zipcode: '45687-899',
+          zipcode: '01001000',
           city: 'cidade',
           state: 'estado',
           country: 'pais'
@@ -154,7 +154,7 @@ describe('1 - Test UserController', () => {
           street: 'avenida',
           number: '100A',
           district: 'Bairro',
-          zipcode: '45687-899',
+          zipcode: '01001000',
           city: 'cidade',
           state: 'estado',
           country: 'pais'

@@ -23,7 +23,7 @@ const payload = {
     street: 'avenida',
     number: '100A',
     district: 'Bairro',
-    zipcode: '45687-899',
+    zipcode: '01001000',
     city: 'cidade',
     state: 'estado',
     country: 'pais'
@@ -43,7 +43,7 @@ const payloadTwo = {
     street: 'avenida',
     number: '100A',
     district: 'Bairro',
-    zipcode: '45687-899',
+    zipcode: '01001000',
     city: 'cidade',
     state: 'estado',
     country: 'pais'
@@ -78,7 +78,7 @@ describe('3 - Test UserServices', () => {
             street: 'avenida',
             number: '100A',
             district: 'Bairro',
-            zipcode: '45687-899',
+            zipcode: '01001000',
             city: 'cidade',
             state: 'estado',
             country: 'pais'
@@ -111,7 +111,7 @@ describe('3 - Test UserServices', () => {
             street: 'avenida',
             number: '100A',
             district: 'Bairro',
-            zipcode: '45687-899',
+            zipcode: '01001000',
             city: 'cidade',
             state: 'estado',
             country: 'pais'
@@ -132,7 +132,7 @@ describe('3 - Test UserServices', () => {
             street: 'avenida',
             number: '100A',
             district: 'Bairro',
-            zipcode: '45687-899',
+            zipcode: '01001000',
             city: 'cidade',
             state: 'estado',
             country: 'pais'
@@ -352,7 +352,7 @@ describe('3 - Test UserServices', () => {
             street: 'avenida',
             number: '100A',
             district: 'Bairro',
-            zipcode: '45687-899',
+            zipcode: '01001000',
             city: 'cidade',
             state: 'estado',
             country: 'pais'
@@ -383,7 +383,7 @@ describe('3 - Test UserServices', () => {
             street: 'avenida',
             number: '100A',
             district: 'Bairro',
-            zipcode: '45687-899',
+            zipcode: '01001000',
             city: 'cidade',
             state: 'estado',
             country: 'pais'
@@ -404,7 +404,7 @@ describe('3 - Test UserServices', () => {
             street: 'avenida',
             number: '100A',
             district: 'Bairro',
-            zipcode: '45687-899',
+            zipcode: '01001000',
             city: 'cidade',
             state: 'estado',
             country: 'pais'
@@ -425,7 +425,7 @@ describe('3 - Test UserServices', () => {
             street: 'avenida',
             number: '100A',
             district: 'Bairro',
-            zipcode: '45687-899',
+            zipcode: '01001000',
             city: 'cidade',
             state: 'estado',
             country: 'pais'
@@ -445,7 +445,7 @@ describe('3 - Test UserServices', () => {
             street: 'avenida',
             number: '100A',
             district: 'Bairro',
-            zipcode: '45687-899',
+            zipcode: '01001000',
             city: 'cidade',
             state: 'estado',
             country: 'pais'
@@ -480,7 +480,7 @@ describe('3 - Test UserServices', () => {
             street: 'avenida',
             number: '100A',
             district: 'Bairro',
-            zipcode: '45687-899',
+            zipcode: '01001000',
             city: 'cidade',
             state: 'estado',
             country: 'pais'

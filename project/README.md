@@ -68,7 +68,7 @@
 
   ```sh
   sudo docker-compose up
-  
+
 - Acesse pelo navegador 
   ```sh
     http://localhost:3001/
@@ -81,6 +81,27 @@
 - Acesse pelo navegador 
   ```sh
     http://localhost:3001/
+
+<br/>
+
+## Instruções para testar o projeto
+
+<br>
+
+- Testes unitarios
+
+  ```sh
+  npm run test:unit
+  
+- Testes de integração  
+  ```sh
+    npm run test:integration
+
+- Verificar cobertura dos testes
+
+  ```sh
+  npm run test:coverage
+
 
 <br/>
 
@@ -107,7 +128,7 @@
                 "street": "Av. Azaleia",
                 "number": "1050A",
                 "district": "Florestal",
-                "zipcode": "45687-899",
+                "zipcode": "01001000",
                 "city": "Caetanopolis",
                 "state": "MG",
                 "country": "Brasil"
@@ -127,7 +148,7 @@
               "street": "Av. Azaleia",
               "number": "1050A",
               "district": "Florestal",
-              "zipcode": "45687-899",
+              "zipcode": "01001000",
               "city": "Caetanopolis",
               "state": "MG",
               "country": "Brasil"
@@ -168,7 +189,7 @@
                   "street": "Av. Azaleia",
                   "number": "1050A",
                   "district": "Florestal",
-                  "zipcode": "45687-899",
+                  "zipcode": "01001000",
                   "city": "Caetanopolis",
                   "state": "MG",
                   "country": "Brasil"
@@ -208,7 +229,7 @@
                   "street": "Av. Azaleia",
                   "number": "1050A",
                   "district": "Florestal",
-                  "zipcode": "45687-899",
+                  "zipcode": "01001000",
                   "city": "Caetanopolis",
                   "state": "MG",
                   "country": "Brasil"
@@ -247,7 +268,7 @@
                 "street": "Av. Azaleia",
                 "number": "1050A",
                 "district": "Florestal",
-                "zipcode": "45687-899",
+                "zipcode": "01001000",
                 "city": "Caetanopolis",
                 "state": "MG",
                 "country": "Brasil"
@@ -284,7 +305,7 @@
                 "street": "Av. Azaleia",
                 "number": "1050A",
                 "district": "Florestal",
-                "zipcode": "45687-899",
+                "zipcode": "01001000",
                 "city": "Caetanopolis",
                 "state": "MG",
                 "country": "Brasil"
@@ -306,7 +327,7 @@
                 "street": "Av. Azaleia",
                 "number": "1050A",
                 "district": "Florestal",
-                "zipcode": "45687-899",
+                "zipcode": "01001000",
                 "city": "Caetanopolis",
                 "state": "MG",
                 "country": "Brasil"
@@ -402,7 +423,7 @@
                 "street": "Rua das Flores",
                 "number": "500",
                 "district": "Santo Agostinho",
-                "zipcode": "45687-899",
+                "zipcode": "01001000",
                 "city": "Belo Horizonte",
                 "state": "MG",
                 "country": "Brasil"

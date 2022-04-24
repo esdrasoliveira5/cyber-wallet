@@ -18,6 +18,7 @@ class CustomRouter<T> {
     this.router.get(route, controller.read);
     this.router.put(`${route}/transaction`, controller.transaction);
     this.router.put(`${route}/:id`, controller.update);
+    this.router.delete(`${route}/:id`, controller.delete);
   }
 }
 

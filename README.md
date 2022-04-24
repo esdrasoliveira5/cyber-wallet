@@ -22,7 +22,7 @@
 
 ## Descrição
 
-**Objetivo**: Neste projeto foi desenvolvido uma CRUD api para gerenciar uma carteira digital utilizando o banco de dados MongoDB aplicando conceitos de POO.
+**Objetivo**: Neste projeto foi desenvolvido uma CRUD api para gerenciar uma carteira digital utilizando o banco de dados MongoDB aplicando conceitos de POO e SOLID.
 
 - Arquitetura REST;
 - Banco de Dados MongoDB;

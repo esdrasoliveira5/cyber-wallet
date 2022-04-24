@@ -7,16 +7,14 @@
   - [Instalação](#Instalação)
   - [Instruções para iniciar o projeto](#Intruções-para-iniciar-o-projeto)
 - [Documentação](#Documentação)
-  - [Cadastrar um novo carro](#Cadastrar-um-novo-carro)
-  - [Lista todos os carros](#Lista-todos-os-carros)
-  - [Listar um único carro através do seu id](#Listar-um-único-carro-através-do-seu-id) 
-  - [Atualizar o registro de um carro através do seu id](#Atualizar-o-registro-de-um-carro-através-do-seu-id)
-  - [Excluir os registros de um carro](#Excluir-os-registros-de-um-carro)
-  - [Cadastrar uma nova moto](#Cadastrar-uma-nova-moto)
-  - [Lista todos as motos](#Lista-todos-as-motos)
-  - [Listar uma única moto através do seu id](#Listar-uma-única-moto-através-do-seu-id)
-  - [Atualizar o registro de uma moto através do seu id](#Atualizar-o-registro-de-uma-moto-através-do-seu-id)
-  - [Excluir os registros de uma moto](#Excluir-os-registros-de-uma-moto)
+  - [Abre a documentação com Swagger](#Abre-a-documentação-com-Swagger)
+  - [Cadastra um novo usuario](#Cadastra-um-novo-usuario)
+  - [Loga um usuário](#Loga-um-usuário) 
+  - [Lista todos usuarios](#Lista-todos-usuarios)
+  - [Lista um usuario pelo seu id](#Lista-um-usuario-pelo-seu-id)
+  - [Atualiza um usuario pelo id](#Atualiza-um-usuario-pelo-id)
+  - [Atualiza o saldo adiciona a transação](#Atualiza-o-saldo-adiciona-a-transação)
+  - [Deletar um usuario](#Deletar-um-usuario)
 
 
 
@@ -36,6 +34,7 @@
 - Testes Automatizados com Mocha, Chai e Sinnon;
 - Docker;
 - Docker compose;
+- Swagger;
 
 
 ## Pré-requisitos
@@ -102,12 +101,19 @@
   ```sh
   npm run test:coverage
 
-
-<br/>
-
 ## Documentação
 
 <br/>
+
+### **Abre a documentação com Swagger** 
+##### `GET` /api-docs
+
+  <br/>
+
+  Esse endpoint permite testar a api com o Swagger;
+
+
+  <br/>
 
 ### **Cadastra um novo usuario** 
 ##### `POST` /user
@@ -160,7 +166,7 @@
     ```
   <br/>
 
-### **Loga um usuario** 
+### **Loga um usuário** 
 ##### `POST` /user/login
 
   <br/>

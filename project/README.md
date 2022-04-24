@@ -348,7 +348,9 @@
   <br/>
 
   Retorna status ``200`` e o usuario com o saldo e as transações atualizadas.
-  *Obs: Apenas 3 tipos de transacoes disponiveis, sao elas "payment", "transfer" e "deposit"*
+  *Obs: Apenas 3 tipos de transações estao disponiveis, sao elas "payment", "transfer" e "deposit"*
+  *Obs2: Ambos usuarios precisam estar cadastrados para essa operação*
+  *Obs3: Caso nao haja saldo na conta para as operaçoes "transfer" e "payment" o usuario fica em debito e com saldo negativo*
 
   - Exemplo `request headers` 
     ``` json

@@ -29,10 +29,14 @@
 - Arquitetura REST;
 - Banco de Dados MongoDB;
 - TypeScript;
-- JsonWebToken;
+- Express;
+- Mongoose;
 - Bcrypt;
+- JsonWebToken;
 - Testes Automatizados com Mocha, Chai e Sinnon;
 - Docker;
+- Docker compose;
+
 
 ## Pré-requisitos
 
@@ -45,19 +49,38 @@
 
 - Clone o repositório
   ```sh
-    git clone git@github.com:esdrasoliveira5/Car-Shop.git
+    git clone git@github.com:esdrasoliveira5/cyber-wallet.git
+
 - Vá para a pasta da aplicação
   ```sh
-    cd Car-Shop
+    cd cyber-wallet/project 
+
+- Instale as dependencias
+  ```sh
+    npm install 
+
 
 ## Instruções para iniciar o projeto
 
 <br>
 
-- Comando para iniciar
+- Comando para iniciar com docker
 
   ```sh
   sudo docker-compose up
+  
+- Acesse pelo navegador 
+  ```sh
+    http://localhost:3001/
+
+- Comando para iniciar pelo node
+
+  ```sh
+  npm run start
+
+- Acesse pelo navegador 
+  ```sh
+    http://localhost:3001/
 
 <br/>
 

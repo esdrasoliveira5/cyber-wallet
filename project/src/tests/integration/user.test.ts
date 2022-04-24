@@ -588,17 +588,16 @@ describe('7 - Test endpoint DELETE /user/:id', () => {
       sinon.restore();
     });
 
-    it('a) return status 200 and the user updated', async () => {
+    it('a) return status 204 and no content', async () => {
       chaiHttpResponse = await chai
          .request(server.app)
          .delete('/user/6260bca97c58e5a0b7847cfa')
          .set('authorization', token)
 
       expect(chaiHttpResponse).to.have.status(204);
-      expect(chaiHttpResponse.body).to.deep.equal([]);
     });
   });
-  describe('5.2 - if fail', () => {
+  describe('7.2 - if fail', () => {
     let chaiHttpResponse: Response;
     before(() => {
       sinon

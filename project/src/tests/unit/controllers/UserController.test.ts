@@ -218,5 +218,29 @@ describe('1 - Test UserController', () => {
       expect((response.status as sinon.SinonStub).calledWith(200)).to.be.equal(true);
       expect((response.json as sinon.SinonStub).calledWith(payload)).to.be.equal(true);
     });
-  });  
+  });
+  describe('1.7 - method delete', () => {
+    before(async () => {
+      request.headers = { authorization: 'bearer token'};
+      request.params = { id: '6260bca97c58e5a0b7847cfa'};
+
+      response.status = sinon.stub().returns(response)
+      response.json = sinon.stub()
+      
+      sinon
+        .stub(user.service, 'delete')
+        .resolves({ status: 204, response: [] });
+    });
+  
+    after(()=>{
+      sinon.restore();
+    });
+  
+    it('return the status 204', async () => {
+      await user.update(request, response);
+      
+      expect((response.status as sinon.SinonStub).calledWith(204)).to.be.equal(true);
+      expect((response.json as sinon.SinonStub).calledWith([])).to.be.equal(true);
+    });
+  });
 });

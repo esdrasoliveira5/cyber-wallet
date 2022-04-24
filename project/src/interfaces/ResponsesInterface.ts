@@ -24,3 +24,7 @@ export interface ResponseUser<T> extends Status {
 export interface ResponseLogin<T> extends Status {
   response: Token<T>,
 }
+
+export interface ResponseDelete extends Status {
+  response: [];
+}

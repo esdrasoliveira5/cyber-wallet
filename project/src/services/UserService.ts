@@ -1,5 +1,6 @@
 import Service from '.';
 import {
+  ResponseDelete,
   ResponseError,
   ResponseLogin,
   ResponseUser,
@@ -7,7 +8,7 @@ import {
 import UserModel from '../models/UserModel';
 import { Login } from '../types';
 import { Transaction } from '../types/TransactionType';
-import { UserId } from '../types/UserIdType';
+import { UserId, UserIdSchema } from '../types/UserIdType';
 import { UserInfo } from '../types/UserInfoType';
 import { User } from '../types/UserType';
 
@@ -123,6 +124,28 @@ class UserService extends Service<User | UserInfo> {
     await this.model.reciveTransaction(reciver._id, obj);
 
     return { status: this.status.OK, response: response as UserId };
+  };
+
+  delete = async (token: string, id: string):
+  Promise<ResponseDelete | ResponseError> => {
+    const parsedId = UserIdSchema.safeParse({ _id: id });
+    if (!parsedId.success) {
+      return {
+        status: this.status.BAD_REQUEST,
+        response: { error: parsedId.error },
+      };
+    }
+
+    const jwtToken = this.jwt.validate(token);
+    if ('status' in jwtToken) return jwtToken;
+
+    const userToken = await this.model.readOne({ _id: jwtToken.id }) as UserId;
+    if (!userToken) return this.response.UNAUTHORIZED;
+
+    const user = await this.model.delete(id);
+    if (!user) return this.response.NOT_FOUND;
+
+    return { status: this.status.NO_CONTENT, response: [] };
   };
 }
 

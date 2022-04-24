@@ -1,6 +1,7 @@
 import { MessageErrors, StatusCodes } from '../enums';
 import { Model } from '../interfaces/ModelInterface';
 import {
+  ResponseDelete,
   ResponseError,
   ResponseLogin,
   ResponseUser,
@@ -55,6 +56,9 @@ abstract class Service<T> {
 
   abstract transaction(token: string | undefined, obj: T | Transaction):
   Promise<ResponseUser<T> | ResponseError>;
+
+  abstract delete(token: string | undefined, id: string):
+  Promise<ResponseDelete | ResponseError>;
 }
 
 export default Service;

@@ -14,4 +14,5 @@ export interface Model<T> {
 
   sendTransaction(id: string, obj: Transaction): Promise<T | null>
 
+  delete(id:string): Promise<T | null>;
 }

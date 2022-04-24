@@ -214,7 +214,7 @@ describe('2 - Test UserModel', () => {
   
     after(()=>{
       sinon.restore();
-    })
+    });
   
     it('return the user updated in the db', async () => {
       const response = await user.delete('6260bca97c58e5a0b7847cfa')

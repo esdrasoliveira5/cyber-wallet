@@ -43,6 +43,9 @@ abstract class MongoModel<T> implements Model<T> {
     );
     return response;
   };
+
+  delete = async (id:string): Promise<T | null> =>
+    this.model.findByIdAndDelete(id);
 }
 
 export default MongoModel;
